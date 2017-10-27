@@ -24,10 +24,10 @@ namespace CMS.WepApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
             var connectionString =
-                "Server=tcp:vh.database.windows.net;Integrated Security=false;Initial Catalog=CMS;User id=vanhakobyan1996;Password=VAN606580`$$;Encrypt=True;persist security info=True;";
-           // services.AddDbContext<CMSContext>(options => options.UseSqlServer(connectionString));
+                @"Server=tcp:vh.database.windows.net;Integrated Security=false;Initial Catalog=CMS;User id=vanhakobyan1996;Password=VAN606580$$;Encrypt=True;persist security info=True;";
+             services.AddDbContext<CMSContext>(options => options.UseSqlServer(connectionString));
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
