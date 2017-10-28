@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CMS.BL;
 using CMS.DAL.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CMS.WepApi.Controllers
 {
@@ -13,18 +10,17 @@ namespace CMS.WepApi.Controllers
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
-        private readonly CMSContext _context;
-
+        private readonly ProductsManager productsManager;
         public ProductsController()
         {
-            _context = new CMSContext();
+            productsManager = new ProductsManager();
         }
 
         // GET: api/Products
         [HttpGet]
         public IEnumerable<Products> GetProducts()
         {
-            return _context.Products;
+            return productsManager.GetProducts();
         }
 
         // GET: api/Products/5
@@ -32,17 +28,10 @@ namespace CMS.WepApi.Controllers
         public async Task<IActionResult> GetProducts([FromRoute] int id)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-
-            var products = await _context.Products.SingleOrDefaultAsync(m => m.Id == id);
-
+            var products = await productsManager.GetProductsById(id);
             if (products == null)
-            {
                 return NotFound();
-            }
-
             return Ok(products);
         }
 
@@ -51,34 +40,12 @@ namespace CMS.WepApi.Controllers
         public async Task<IActionResult> PutProducts([FromRoute] int id, [FromBody] Products products)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-
             if (id != products.Id)
-            {
                 return BadRequest();
-            }
-
-            _context.Entry(products).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProductsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            if (!productsManager.ProductsExists(id))
+                return NotFound();
+            return Ok(await productsManager.PutProducts(id, products));
         }
 
         // POST: api/Products
@@ -86,14 +53,9 @@ namespace CMS.WepApi.Controllers
         public async Task<IActionResult> PostProducts([FromBody] Products products)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-
-            _context.Products.Add(products);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetProducts", new { id = products.Id }, products);
+            var postProducts = await productsManager.PostProducts(products);
+            return CreatedAtAction("GetProducts", new { id = postProducts.Id }, postProducts);
         }
 
         // DELETE: api/Products/5
@@ -101,25 +63,11 @@ namespace CMS.WepApi.Controllers
         public async Task<IActionResult> DeleteProducts([FromRoute] int id)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-
-            var products = await _context.Products.SingleOrDefaultAsync(m => m.Id == id);
+            var products = await productsManager.DeleteProducts(id);
             if (products == null)
-            {
                 return NotFound();
-            }
-
-            _context.Products.Remove(products);
-            await _context.SaveChangesAsync();
-
             return Ok(products);
-        }
-
-        private bool ProductsExists(int id)
-        {
-            return _context.Products.Any(e => e.Id == id);
         }
     }
 }

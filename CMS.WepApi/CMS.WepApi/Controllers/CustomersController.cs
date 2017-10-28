@@ -15,6 +15,7 @@ namespace CMS.WepApi.Controllers
         {
             customersManager = new CustomersManager(); ;
         }
+
         // GET: api/Customers
         [HttpGet]
         public IEnumerable<Customers> GetCustomers()
@@ -42,6 +43,8 @@ namespace CMS.WepApi.Controllers
                 return BadRequest(ModelState);
             if (id != customers.Id)
                 return BadRequest();
+            if (!customersManager.CustomersExists(id))
+                return NotFound();
             return Ok(await customersManager.PutCustomers(id, customers));
         }
 
@@ -61,7 +64,10 @@ namespace CMS.WepApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            return Ok(await customersManager.DeleteCustomers(id));
+            var customers = await customersManager.DeleteCustomers(id);
+            if (customers == null)
+                return NotFound();
+            return Ok();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using CMS.DAL.Models;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,10 @@ namespace CMS.BL
             db.Customers.Remove(customers);
             await db.SaveChangesAsync();
             return customers;
+        }
+        public bool CustomersExists(int id)
+        {
+            return db.Customers.Any(e => e.Id == id);
         }
     }
 }

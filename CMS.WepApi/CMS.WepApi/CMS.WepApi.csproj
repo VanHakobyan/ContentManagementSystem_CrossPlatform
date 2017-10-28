@@ -30,7 +30,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CMS.BL\CMS.BL.csproj" />
-    <ProjectReference Include="..\CMS.DAL\CMS.DAL.csproj" />
   </ItemGroup>
 
 </Project>
