@@ -24,7 +24,6 @@ namespace CMS.WepApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            //services.AddEntityFrameworkSqlServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -34,7 +33,16 @@ namespace CMS.WepApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+               
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Main}/{action=Index}/{id?}");
+            });
+            app.UseWelcomePage();
+            //app.UseMvc();
+            //app.UseMvc(builder => builder.MapRoute("default", "{controller=Customers}/{action=Index}/{id?}"));
 
         }
     }

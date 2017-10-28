@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CMS.BL;
 using CMS.DAL.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CMS.WepApi.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Customers")]
+    [Route("api/[controller]")]
     public class CustomersController : Controller
     {
-        private readonly CMSContext _context;
-
+        private readonly CustomersManager customersManager;
         public CustomersController()
         {
-            _context = new CMSContext(); ;
+            customersManager = new CustomersManager(); ;
         }
         // GET: api/Customers
         [HttpGet]
         public IEnumerable<Customers> GetCustomers()
         {
-            return _context.Customers;
+            return customersManager.GetCustomers();
         }
 
         // GET: api/Customers/5
@@ -31,17 +27,10 @@ namespace CMS.WepApi.Controllers
         public async Task<IActionResult> GetCustomers([FromRoute] int id)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-
-            var customers = await _context.Customers.SingleOrDefaultAsync(m => m.Id == id);
-
+            var customers = await customersManager.GetCustomersById(id);
             if (customers == null)
-            {
                 return NotFound();
-            }
-
             return Ok(customers);
         }
 
@@ -50,34 +39,10 @@ namespace CMS.WepApi.Controllers
         public async Task<IActionResult> PutCustomers([FromRoute] int id, [FromBody] Customers customers)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-
             if (id != customers.Id)
-            {
                 return BadRequest();
-            }
-
-            _context.Entry(customers).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CustomersExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok(await customersManager.PutCustomers(id, customers));
         }
 
         // POST: api/Customers
@@ -85,13 +50,9 @@ namespace CMS.WepApi.Controllers
         public async Task<IActionResult> PostCustomers([FromBody] Customers customers)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-
-            _context.Customers.Add(customers);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction("GetCustomers", new { id = customers.Id }, customers);
+            var postCustomers = await customersManager.PostCustomers(customers);
+            return CreatedAtAction("GetCustomers", new { id = postCustomers.Id }, postCustomers);
         }
 
         // DELETE: api/Customers/5
@@ -99,25 +60,8 @@ namespace CMS.WepApi.Controllers
         public async Task<IActionResult> DeleteCustomers([FromRoute] int id)
         {
             if (!ModelState.IsValid)
-            {
                 return BadRequest(ModelState);
-            }
-
-            var customers = await _context.Customers.SingleOrDefaultAsync(m => m.Id == id);
-            if (customers == null)
-            {
-                return NotFound();
-            }
-
-            _context.Customers.Remove(customers);
-            await _context.SaveChangesAsync();
-
-            return Ok(customers);
-        }
-
-        private bool CustomersExists(int id)
-        {
-            return _context.Customers.Any(e => e.Id == id);
+            return Ok(await customersManager.DeleteCustomers(id));
         }
     }
 }
