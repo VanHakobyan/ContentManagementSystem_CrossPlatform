@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CMS.DAL.Models;
 
 namespace CMS.WepApi.Controllers
 {
@@ -15,9 +15,9 @@ namespace CMS.WepApi.Controllers
     {
         private readonly CMSContext _context;
 
-        public ProductsController(CMSContext context)
+        public ProductsController()
         {
-            _context = context;
+            _context = new CMSContext();
         }
 
         // GET: api/Products

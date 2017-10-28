@@ -41,8 +41,6 @@ namespace CMS.DAL.Models
 
                 entity.Property(e => e.ExpirationDate).HasColumnType("datetime");
 
-                entity.Property(e => e.Price).IsRequired();
-
                 entity.Property(e => e.ProductName).IsRequired();
 
                 entity.Property(e => e.ReleaseDate).HasColumnType("datetime");

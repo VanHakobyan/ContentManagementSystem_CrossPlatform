@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.DAL.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using CMS.DAL.Models;
 
 namespace CMS.WepApi.Controllers
 {
@@ -15,11 +15,10 @@ namespace CMS.WepApi.Controllers
     {
         private readonly CMSContext _context;
 
-        public CustomersController(CMSContext context)
+        public CustomersController()
         {
-            _context = context;
+            _context = new CMSContext(); ;
         }
-
         // GET: api/Customers
         [HttpGet]
         public IEnumerable<Customers> GetCustomers()
@@ -91,8 +90,7 @@ namespace CMS.WepApi.Controllers
             }
 
             _context.Customers.Add(customers);
-            await _context.SaveChangesAsync();
-
+            
             return CreatedAtAction("GetCustomers", new { id = customers.Id }, customers);
         }
 

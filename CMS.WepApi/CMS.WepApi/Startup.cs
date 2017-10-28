@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CMS.DAL.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,10 +23,8 @@ namespace CMS.WepApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString =
-                @"Server=tcp:vh.database.windows.net;Integrated Security=false;Initial Catalog=CMS;User id=vanhakobyan1996;Password=VAN606580$$;Encrypt=True;persist security info=True;";
-             services.AddDbContext<CMSContext>(options => options.UseSqlServer(connectionString));
             services.AddMvc();
+            services.AddEntityFrameworkSqlServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

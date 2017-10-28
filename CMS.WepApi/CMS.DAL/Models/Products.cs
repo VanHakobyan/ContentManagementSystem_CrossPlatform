@@ -7,7 +7,7 @@ namespace CMS.DAL.Models
     {
         public int Id { get; set; }
         public string ProductName { get; set; }
-        public string Price { get; set; }
+        public int? Price { get; set; }
         public string Color { get; set; }
         public DateTime? ReleaseDate { get; set; }
         public DateTime? ExpirationDate { get; set; }
