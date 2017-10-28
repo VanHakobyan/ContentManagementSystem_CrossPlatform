@@ -24,7 +24,7 @@ namespace CMS.WepApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddEntityFrameworkSqlServer();
+            //services.AddEntityFrameworkSqlServer();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

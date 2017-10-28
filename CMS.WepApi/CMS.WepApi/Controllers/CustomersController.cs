@@ -90,7 +90,7 @@ namespace CMS.WepApi.Controllers
             }
 
             _context.Customers.Add(customers);
-            
+            await _context.SaveChangesAsync();
             return CreatedAtAction("GetCustomers", new { id = customers.Id }, customers);
         }
 
