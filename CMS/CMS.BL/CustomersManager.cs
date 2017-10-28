@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CMS.DAL.Models;
@@ -6,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CMS.BL
 {
-    public class CustomersManager
+    public class CustomersManager:IDisposable
     {
         private readonly CMSContext db = new CMSContext();
 
@@ -55,6 +56,11 @@ namespace CMS.BL
         public bool CustomersExists(int id)
         {
             return db.Customers.Any(e => e.Id == id);
+        }
+
+        public void Dispose()
+        {
+            db?.Dispose();
         }
     }
 }

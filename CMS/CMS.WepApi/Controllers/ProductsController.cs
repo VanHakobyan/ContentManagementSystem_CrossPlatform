@@ -69,5 +69,10 @@ namespace CMS.WepApi.Controllers
                 return NotFound();
             return Ok(products);
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing) productsManager.Dispose();
+        }
     }
 }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CMS.BL
 {
-    public class ProductsManager
+    public class ProductsManager:IDisposable
     {
         private CMSContext db = new CMSContext();
         // GET: api/Products
@@ -54,6 +54,11 @@ namespace CMS.BL
         public bool ProductsExists(int id)
         {
             return db.Products.Any(e => e.Id == id);
+        }
+
+        public void Dispose()
+        {
+            db?.Dispose();
         }
     }
 }
