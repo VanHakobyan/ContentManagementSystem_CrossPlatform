@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using CMS.DAL.Models;
 
-namespace CMS.Models.RequestModels
+namespace CMS.BL.RequestModels
 {
     public partial class RequestProducts
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CMS.BL;
-using CMS.DAL.Models;
+using CMS.BL.ViewModels;
 //using CMS.WepApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,7 +19,7 @@ namespace CMS.WepApi.Controllers
 
         // GET: api/Customers
         [HttpGet]
-        public IEnumerable<Customers> GetCustomers()
+        public IEnumerable<ViewCustomers> GetCustomers()
         {
             return customersManager.GetCustomers();
         }
@@ -30,7 +30,7 @@ namespace CMS.WepApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var customers = await customersManager.GetCustomersById(id);
+            var customers =await customersManager.GetCustomersById(id);
             if (customers == null)
                 return NotFound();
             return Ok(customers);
@@ -38,12 +38,10 @@ namespace CMS.WepApi.Controllers
 
         // PUT: api/Customers/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomers([FromRoute] int id, [FromBody] Customers customers)
+        public async Task<IActionResult> PutCustomers([FromRoute] int id, [FromBody] ViewCustomers customers)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if (id != customers.Id)
-                return BadRequest();
             if (!customersManager.CustomersExists(id))
                 return NotFound();
             return Ok(await customersManager.PutCustomers(id, customers));
@@ -51,12 +49,12 @@ namespace CMS.WepApi.Controllers
 
         // POST: api/Customers
         [HttpPost]
-        public async Task<IActionResult> PostCustomers([FromBody] Customers customers)
+        public async Task<IActionResult> PostCustomers([FromBody] ViewCustomers customers)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var postCustomers = await customersManager.PostCustomers(customers);
-            return CreatedAtAction("GetCustomers", new { id = postCustomers.Id }, postCustomers);
+            return CreatedAtAction("GetCustomers", postCustomers);
         }
 
         // DELETE: api/Customers/5
@@ -68,12 +66,12 @@ namespace CMS.WepApi.Controllers
             var customers = await customersManager.DeleteCustomers(id);
             if (customers == null)
                 return NotFound();
-            return Ok();
+            return Ok(customers);
         }
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing)customersManager.Dispose();
+            if (disposing) customersManager.Dispose();
         }
     }
 }

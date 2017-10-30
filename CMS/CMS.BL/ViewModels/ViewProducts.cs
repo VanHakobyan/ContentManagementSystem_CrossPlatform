@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
+using CMS.DAL.Models;
 
-namespace CMS.Models.ResponseModels
+namespace CMS.BL.ViewModels
 {
-    public class ResponseProducts
+    public class ViewProducts
     {
-        public int Id { get; set; }
         public string ProductName { get; set; }
         public int? Price { get; set; }
         public string Color { get; set; }

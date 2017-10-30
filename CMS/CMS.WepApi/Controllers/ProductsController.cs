@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using CMS.BL;
-using CMS.DAL.Models;
+using CMS.BL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.WepApi.Controllers
@@ -18,7 +18,7 @@ namespace CMS.WepApi.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public IEnumerable<Products> GetProducts()
+        public IEnumerable<ViewProducts> GetProducts()
         {
             return productsManager.GetProducts();
         }
@@ -37,25 +37,23 @@ namespace CMS.WepApi.Controllers
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProducts([FromRoute] int id, [FromBody] Products products)
+        public async Task<IActionResult> PutProducts([FromRoute] int id, [FromBody] ViewProducts products)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if (id != products.Id)
-                return BadRequest();
-            if (!productsManager.ProductsExists(id))
+           if (!productsManager.ProductsExists(id))
                 return NotFound();
             return Ok(await productsManager.PutProducts(id, products));
         }
 
         // POST: api/Products
         [HttpPost]
-        public async Task<IActionResult> PostProducts([FromBody] Products products)
+        public async Task<IActionResult> PostProducts([FromBody] ViewProducts products)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var postProducts = await productsManager.PostProducts(products);
-            return CreatedAtAction("GetProducts", new { id = postProducts.Id }, postProducts);
+            return CreatedAtAction("GetProducts",  postProducts);
         }
 
         // DELETE: api/Products/5

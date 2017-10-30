@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using CMS.DAL.Models;
 
-namespace CMS.Models.ResponseModels
-{
-    public partial class ResponseCustomers
+namespace CMS.BL.RequestModels
+{ 
+    public class RequestCustomers
     {
-        public ResponseCustomers()
+        public RequestCustomers()
         {
-            Products = new HashSet<ResponseProducts>();
+            Products = new HashSet<Products>();
         }
 
-        public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }
@@ -19,6 +19,6 @@ namespace CMS.Models.ResponseModels
         public string Country { get; set; }
         public string City { get; set; }
 
-        public ICollection<ResponseProducts> Products { get; set; }
+        public ICollection<Products> Products { get; set; }
     }
 }

@@ -2,28 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CMS.BL.ViewModels;
 using CMS.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CMS.BL
 {
-    public class CustomersManager:IDisposable
+    public class CustomersManager : IDisposable
     {
         private readonly CMSContext db = new CMSContext();
+        private readonly ModelFactory.ModelFactory factory = new ModelFactory.ModelFactory();
 
-        public IEnumerable<Customers> GetCustomers()
+        public IEnumerable<ViewCustomers> GetCustomers()
         {
-            return db.Customers;
+           return db.Customers.Select(customer => factory.CreateViewCustumerModelFromDb(customer)).ToList();
         }
 
         // GET: api/Customers/5
-        public async Task<Customers> GetCustomersById(int id)
+        public async Task<ViewCustomers> GetCustomersById(int id)
         {
-            return await db.Customers.SingleOrDefaultAsync(m => m.Id == id);
+            return factory.CreateViewCustumerModelFromDb(await db.Customers.SingleOrDefaultAsync(m => m.Id == id));
         }
 
         // PUT: api/Customers/5
-        public async Task<Customers> PutCustomers(int id, Customers customers)
+        public async Task<ViewCustomers> PutCustomers(int id, ViewCustomers customers)
         {
             try
             {
@@ -38,20 +40,20 @@ namespace CMS.BL
         }
 
         // POST: api/Customers
-        public async Task<Customers> PostCustomers(Customers customers)
+        public async Task<ViewCustomers> PostCustomers(ViewCustomers customers)
         {
-            db.Customers.Add(customers);
+            db.Customers.Add(factory.CreateCustumerModelFromViewModel(customers));
             await db.SaveChangesAsync();
             return customers;
         }
 
         // DELETE: api/Customers/5
-        public async Task<Customers> DeleteCustomers(int id)
+        public async Task<ViewCustomers> DeleteCustomers(int id)
         {
             var customers = await db.Customers.SingleOrDefaultAsync(m => m.Id == id);
             db.Customers.Remove(customers);
             await db.SaveChangesAsync();
-            return customers;
+            return factory.CreateViewCustumerModelFromDb(customers);
         }
         public bool CustomersExists(int id)
         {
