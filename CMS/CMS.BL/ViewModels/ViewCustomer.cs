@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using CMS.DAL.Models;
 
-namespace CMS.BL.RequestModels
-{ 
-    public class RequestCustomers
+namespace CMS.BL.ViewModels
+{
+    public partial class ViewCustomer
     {
-        public RequestCustomers()
+        public ViewCustomer()
         {
-            Products = new HashSet<Products>();
+            Products = new HashSet<ViewProduct>();
         }
 
         public string FirstName { get; set; }
@@ -19,6 +18,6 @@ namespace CMS.BL.RequestModels
         public string Country { get; set; }
         public string City { get; set; }
 
-        public ICollection<Products> Products { get; set; }
+        public ICollection<ViewProduct> Products { get; set; }
     }
 }

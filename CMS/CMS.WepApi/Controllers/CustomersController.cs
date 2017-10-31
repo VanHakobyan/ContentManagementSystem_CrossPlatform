@@ -14,12 +14,12 @@ namespace CMS.WepApi.Controllers
         private readonly CustomersManager customersManager;
         public CustomersController()
         {
-            customersManager = new CustomersManager(); ;
+            customersManager = new CustomersManager(); 
         }
 
         // GET: api/Customers
         [HttpGet]
-        public IEnumerable<ViewCustomers> GetCustomers()
+        public IEnumerable<ViewCustomer> GetCustomers()
         {
             return customersManager.GetCustomers();
         }
@@ -38,22 +38,22 @@ namespace CMS.WepApi.Controllers
 
         // PUT: api/Customers/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCustomers([FromRoute] int id, [FromBody] ViewCustomers customers)
+        public async Task<IActionResult> PutCustomers([FromRoute] int id, [FromBody] ViewCustomer customer)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             if (!customersManager.CustomersExists(id))
                 return NotFound();
-            return Ok(await customersManager.PutCustomers(id, customers));
+            return Ok(await customersManager.PutCustomers(id, customer));
         }
 
         // POST: api/Customers
         [HttpPost]
-        public async Task<IActionResult> PostCustomers([FromBody] ViewCustomers customers)
+        public async Task<IActionResult> PostCustomers([FromBody] ViewCustomer customer)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var postCustomers = await customersManager.PostCustomers(customers);
+            var postCustomers = await customersManager.PostCustomers(customer);
             return CreatedAtAction("GetCustomers", postCustomers);
         }
 

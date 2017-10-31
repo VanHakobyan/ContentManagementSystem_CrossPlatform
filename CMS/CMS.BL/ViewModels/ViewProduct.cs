@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using CMS.DAL.Models;
 
-namespace CMS.BL.RequestModels
+namespace CMS.BL.ViewModels
 {
-    public partial class RequestProducts
+    public class ViewProduct
     {
         public string ProductName { get; set; }
         public int? Price { get; set; }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using CMS.BL.ViewModels;
 using CMS.DAL.Models;
@@ -14,40 +13,42 @@ namespace CMS.BL
         private CMSContext db = new CMSContext();
         private ModelFactory.ModelFactory factory = new ModelFactory.ModelFactory();
         // GET: api/Products
-        public IEnumerable<ViewProducts> GetProducts()
+        public IEnumerable<ViewProduct> GetProducts()
         {
             return db.Products.Select(product => factory.CreateProductsViewModel(product)).ToList();
         }
 
         // GET: api/Products/5
-        public async Task<ViewProducts> GetProductsById(int id)
+        public async Task<ViewProduct> GetProductsById(int id)
         {
             return factory.CreateProductsViewModel(await db.Products.SingleOrDefaultAsync(m => m.Id == id));
         }
 
         // PUT: api/Products/5
-        public async Task<ViewProducts> PutProducts(int id, ViewProducts products)
+        public async Task<ViewProduct> PutProducts(int id, ViewProduct product)
         {
             try
             {
-                
-                db.Entry(db.Products.Update(factory.CreateProductsModelFromDb(products))).State=EntityState.Modified;
-                await db.SaveChangesAsync();
+                //var productsModelFromDb = factory.CreateProductsModelFromDb(product);
+                var productsInDb =await db.Products.FirstOrDefaultAsync(x => x.Id == id);
+                db.Products.Attach(productsInDb);
+                factory.ProductPutMaker(product,productsInDb);
+                db.SaveChanges();
             }
-            catch {/* ignored*/}
-            return products;
+            catch (Exception exception){/* ignored*/}
+            return product;
         }
 
         // POST: api/Products
-        public async Task<ViewProducts> PostProducts(ViewProducts products)
+        public async Task<ViewProduct> PostProducts(ViewProduct product)
         {
-            db.Products.Add(factory.CreateProductsModelFromDb(products));
+            db.Products.Add(factory.CreateProductsModelFromDb(product));
             await db.SaveChangesAsync();
-            return products;
+            return product;
         }
 
         // DELETE: api/Products/5
-        public async Task<ViewProducts> DeleteProducts(int id)
+        public async Task<ViewProduct> DeleteProducts(int id)
         {
             var products = await db.Products.SingleOrDefaultAsync(m => m.Id == id);
             db.Products.Remove(products);

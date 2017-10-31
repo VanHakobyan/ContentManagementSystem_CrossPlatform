@@ -18,7 +18,7 @@ namespace CMS.WepApi.Controllers
 
         // GET: api/Products
         [HttpGet]
-        public IEnumerable<ViewProducts> GetProducts()
+        public IEnumerable<ViewProduct> GetProducts()
         {
             return productsManager.GetProducts();
         }
@@ -37,22 +37,22 @@ namespace CMS.WepApi.Controllers
 
         // PUT: api/Products/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProducts([FromRoute] int id, [FromBody] ViewProducts products)
+        public async Task<IActionResult> PutProducts([FromRoute] int id, [FromBody] ViewProduct product)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
            if (!productsManager.ProductsExists(id))
                 return NotFound();
-            return Ok(await productsManager.PutProducts(id, products));
+            return Ok(await productsManager.PutProducts(id, product));
         }
 
         // POST: api/Products
         [HttpPost]
-        public async Task<IActionResult> PostProducts([FromBody] ViewProducts products)
+        public async Task<IActionResult> PostProducts([FromBody] ViewProduct product)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var postProducts = await productsManager.PostProducts(products);
+            var postProducts = await productsManager.PostProducts(product);
             return CreatedAtAction("GetProducts",  postProducts);
         }
 
