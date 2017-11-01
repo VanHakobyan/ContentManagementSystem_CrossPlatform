@@ -27,15 +27,11 @@ namespace CMS.BL
         // PUT: api/Products/5
         public async Task<ViewProduct> PutProducts(int id, ViewProduct product)
         {
-            try
-            {
-                //var productsModelFromDb = factory.CreateProductsModelFromDb(product);
-                var productsInDb =await db.Products.FirstOrDefaultAsync(x => x.Id == id);
-                db.Products.Attach(productsInDb);
-                factory.ProductPutMaker(product,productsInDb);
-                db.SaveChanges();
-            }
-            catch (Exception exception){/* ignored*/}
+            //var productsModelFromDb = factory.CreateProductsModelFromDb(product);
+            var productsInDb = await db.Products.FirstOrDefaultAsync(x => x.Id == id);
+            db.Products.Attach(productsInDb);
+            factory.ProductPutMaker(product, productsInDb);
+            db.SaveChanges();
             return product;
         }
 

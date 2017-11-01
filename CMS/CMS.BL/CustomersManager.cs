@@ -12,12 +12,12 @@ namespace CMS.BL
     {
         private readonly CMSContext db = new CMSContext();
         private readonly ModelFactory.ModelFactory factory = new ModelFactory.ModelFactory();
-        private void Update<T>(T entity) where T : class
-        {
-            var dbEntityEntry = db.Entry(entity);
-            db.Set<T>().Attach(entity);
-            dbEntityEntry.State = EntityState.Modified;
-        }
+        //private void Update<T>(T entity) where T : class
+        //{
+        //    var dbEntityEntry = db.Entry(entity);
+        //    db.Set<T>().Attach(entity);
+        //    dbEntityEntry.State = EntityState.Modified;
+        //}
         public IEnumerable<ViewCustomer> GetCustomers()
         {
             return db.Customers.Select(customer => factory.CreateViewCustumerModelFromDb(customer)).ToList();
@@ -45,16 +45,8 @@ namespace CMS.BL
         public async Task<ViewCustomer> PostCustomers(ViewCustomer customer)
         {
             var modelFromViewModel = factory.CreateCustumerModelFromViewModel(customer);
-            try
-            {
-                db.Customers.Add(modelFromViewModel);
-                await db.SaveChangesAsync();
-            }
-            catch (Exception exception)
-            {
-
-                throw;
-            }
+            db.Customers.Add(modelFromViewModel);
+            await db.SaveChangesAsync();
             return customer;
         }
 
