@@ -6,7 +6,7 @@ namespace CMS.BL.ModelFactory
 {
     public class ModelFactory
     {
-       
+        //Customers to view 
         public ViewCustomer CreateViewCustumerModelFromDb(Customers customers)
         {
             var c = new ViewCustomer
@@ -26,6 +26,8 @@ namespace CMS.BL.ModelFactory
             }
             return c;
         }
+
+        //View to Customers
         public Customers CreateCustumerModelFromViewModel(ViewCustomer customer)
         {
             var c = new Customers()
@@ -39,16 +41,17 @@ namespace CMS.BL.ModelFactory
                 Country = customer.Country,
             };
 
-            if (customer.Products != null)
+            //if not contains product
+            if (customer.Products == null) return c;
+            foreach (var products in customer.Products)
             {
-                foreach (var products in customer.Products)
-                {
-                    var productsModelFromDb = CreateProductsModelFromDb(products);
-                    c.Products.Add(productsModelFromDb);
-                }
+                var productsModelFromDb = CreateProductsModelFromDb(products);
+                c.Products.Add(productsModelFromDb);
             }
             return c;
         }
+
+        //Products to View
         public ViewProduct CreateProductsViewModel(Products requestProducts)
         {
             return new ViewProduct
@@ -63,6 +66,7 @@ namespace CMS.BL.ModelFactory
             };
         }
 
+        //View to Products
         public Products CreateProductsModelFromDb(ViewProduct virweProduct)
         {
             return new Products
@@ -77,6 +81,7 @@ namespace CMS.BL.ModelFactory
             };
         }
 
+        //View products time of put
         public void ProductPutMaker(ViewProduct product, Products productsInDb)
         {
             productsInDb.Id = product.CustomerId;
@@ -89,6 +94,7 @@ namespace CMS.BL.ModelFactory
             productsInDb.Customer = product.Customer;
         }
 
+        //Customer time of put
         public void CustomerPutMaker(Customers customerDb, Customers customerLoadDb)
         {
             customerLoadDb.City = customerDb.City;
