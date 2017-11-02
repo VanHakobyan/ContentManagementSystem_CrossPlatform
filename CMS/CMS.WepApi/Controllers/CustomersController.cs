@@ -2,10 +2,12 @@
 using System.Threading.Tasks;
 using CMS.BL;
 using CMS.BL.ViewModels;
+using CMS.WepApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.WepApi.Controllers
 {
+    [CustomExceptionFilter]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class CustomersController : Controller
