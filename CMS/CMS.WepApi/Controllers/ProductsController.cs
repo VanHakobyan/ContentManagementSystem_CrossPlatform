@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CMS.WepApi.Controllers
 {
-    [CustomExceptionFilter]
+    //[CustomExceptionFilter]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class ProductsController : Controller
