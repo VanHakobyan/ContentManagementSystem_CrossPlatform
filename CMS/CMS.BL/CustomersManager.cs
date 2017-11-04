@@ -12,6 +12,8 @@ namespace CMS.BL
     {
         private readonly CMSContext db = new CMSContext();
         private readonly ModelFactory.ModelFactory factory = new ModelFactory.ModelFactory();
+        
+        //TODO: Implement  in projct 
         //private void Update<T>(T entity) where T : class
         //{
         //    var dbEntityEntry = db.Entry(entity);

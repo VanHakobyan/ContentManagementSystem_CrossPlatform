@@ -11,7 +11,7 @@ namespace CMS.BL
     public class ProductsManager : IDisposable
     {
         private CMSContext db = new CMSContext();
-        private ModelFactory.ModelFactory factory = new ModelFactory.ModelFactory();
+        private readonly ModelFactory.ModelFactory factory = new ModelFactory.ModelFactory();
         // GET: api/Products
         public IEnumerable<ViewProduct> GetProducts()
         {
