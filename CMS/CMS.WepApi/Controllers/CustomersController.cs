@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CMS.BL;
 using CMS.BL.ViewModels;
 using CMS.WepApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CMS.WepApi.Controllers
 {
@@ -12,9 +14,12 @@ namespace CMS.WepApi.Controllers
     [Route("api/[controller]")]
     public class CustomersController : Controller
     {
+        private static ILogger Logger { get; set; }
         private readonly CustomersManager customersManager;
-        public CustomersController()
+        public CustomersController(ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
+            Logger = loggerFactory.CreateLogger(GetType().Namespace);
+            Logger.LogInformation("created customersController");
             customersManager = new CustomersManager(); 
         }
 
@@ -23,6 +28,15 @@ namespace CMS.WepApi.Controllers
         public IEnumerable<ViewCustomer> GetCustomers()
         {
             return customersManager.GetCustomers();
+        }
+
+        
+        [Produces("text/html")]
+        [HttpGet("{day}")]
+        [Route("/log/")]
+        public async Task<string> GetLogs([FromRoute] string day)
+        {
+            return await System.IO.File.ReadAllTextAsync($"{Environment.CurrentDirectory}\\Logs\\nlog-own-2017-11-{day}.html");
         }
 
         // GET: api/Customers/5

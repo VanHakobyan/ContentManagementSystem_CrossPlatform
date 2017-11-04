@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CMS.BL;
 using CMS.BL.ViewModels;
 using CMS.WepApi.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CMS.WepApi.Controllers
 {
@@ -12,9 +14,12 @@ namespace CMS.WepApi.Controllers
     [Route("api/[controller]")]
     public class ProductsController : Controller
     {
+        private static ILogger Logger { get; set; }
         private readonly ProductsManager productsManager;
-        public ProductsController()
+        public ProductsController(ILoggerFactory loggerFactory,IServiceProvider serviceProvider)
         {
+            Logger = loggerFactory.CreateLogger(GetType().Namespace);
+            Logger.LogInformation("created customersController");
             productsManager = new ProductsManager();
         }
 
