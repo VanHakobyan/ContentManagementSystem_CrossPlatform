@@ -12,64 +12,64 @@ namespace CMS.WepApi.Controllers
     //[CustomExceptionFilter]
     [Produces("application/json")]
     [Route("api/[controller]")]
-    public class ProductsController : Controller
+    public class EmploymentsController : Controller
     {
         private static ILogger Logger { get; set; }
-        private readonly ProductsManager productsManager;
-        public ProductsController(ILoggerFactory loggerFactory,IServiceProvider serviceProvider)
+        private readonly EmploymentsManager _employmentsManager;
+        public EmploymentsController(ILoggerFactory loggerFactory,IServiceProvider serviceProvider)
         {
             Logger = loggerFactory.CreateLogger(GetType().Namespace);
             Logger.LogInformation("created customersController");
-            productsManager = new ProductsManager();
+            _employmentsManager = new EmploymentsManager();
         }
 
-        // GET: api/Products
+        // GET: api/Employments
         [HttpGet]
-        public IEnumerable<ViewProduct> GetProducts()
+        public IEnumerable<ViewEmployments> GetProducts()
         {
-            return productsManager.GetProducts();
+            return _employmentsManager.GetProducts();
         }
 
-        // GET: api/Products/5
+        // GET: api/Employments/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetProducts([FromRoute] int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var products = await productsManager.GetProductsById(id);
+            var products = await _employmentsManager.GetProductsById(id);
             if (products == null)
                 return NotFound();
             return Ok(products);
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Employments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProducts([FromRoute] int id, [FromBody] ViewProduct product)
+        public async Task<IActionResult> PutProducts([FromRoute] int id, [FromBody] ViewEmployments employments)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-           if (!productsManager.ProductsExists(id))
+           if (!_employmentsManager.ProductsExists(id))
                 return NotFound();
-            return Ok(await productsManager.PutProducts(id, product));
+            return Ok(await _employmentsManager.PutProducts(id, employments));
         }
 
-        // POST: api/Products
+        // POST: api/Employments
         [HttpPost]
-        public async Task<IActionResult> PostProducts([FromBody] ViewProduct product)
+        public async Task<IActionResult> PostProducts([FromBody] ViewEmployments employments)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var postProducts = await productsManager.PostProducts(product);
+            var postProducts = await _employmentsManager.PostProducts(employments);
             return CreatedAtAction("GetProducts",  postProducts);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Employments/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProducts([FromRoute] int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var products = await productsManager.DeleteProducts(id);
+            var products = await _employmentsManager.DeleteProducts(id);
             if (products == null)
                 return NotFound();
             return Ok(products);
@@ -77,7 +77,7 @@ namespace CMS.WepApi.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing) productsManager.Dispose();
+            if (disposing) _employmentsManager.Dispose();
         }
     }
 }

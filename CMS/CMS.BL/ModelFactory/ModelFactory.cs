@@ -1,4 +1,6 @@
-﻿using CMS.BL.ViewModels;
+﻿using System.Collections.Generic;
+using System.Linq;
+using CMS.BL.ViewModels;
 using CMS.DAL.Models;
 
 
@@ -6,6 +8,8 @@ namespace CMS.BL.ModelFactory
 {
     public class ModelFactory
     {
+        private ViewSchedules _createViewSchedules;
+
         //Customers to view 
         public ViewCustomer CreateViewCustumerModelFromDb(Customers customers)
         {
@@ -19,9 +23,9 @@ namespace CMS.BL.ModelFactory
                 City = customers.City,
                 Country = customers.Country,
             };
-            foreach (var products in customers.Products)
+            foreach (var employment in customers.Employments)
             {
-                var productsModelFromDb = CreateProductsViewModel(products);
+                var productsModelFromDb = CreateEmploymentsViewModel(employment);
                 c.Products.Add(productsModelFromDb);
             }
             return c;
@@ -41,64 +45,100 @@ namespace CMS.BL.ModelFactory
                 Country = customer.Country,
             };
 
-            //if not contains product
+            //if not contains employments
             if (customer.Products == null) return c;
             foreach (var products in customer.Products)
             {
-                var productsModelFromDb = CreateProductsModelFromDb(products);
-                c.Products.Add(productsModelFromDb);
+                var productsModelFromDb = CreateEmploymentsModelFromDb(products);
+                c.Employments.Add(productsModelFromDb);
             }
             return c;
         }
 
-        //Products to View
-        public ViewProduct CreateProductsViewModel(Products requestProducts)
+        //Employments to View
+        public ViewEmployments CreateEmploymentsViewModel(Employments requestEmployments)
         {
-            return new ViewProduct
+            var empl = new ViewEmployments
             {
-                Customer = requestProducts.Customer,
-                ProductName = requestProducts.ProductName,
-                Color = requestProducts.Color,
-                ExpirationDate = requestProducts.ExpirationDate,
-                ReleaseDate = requestProducts.ExpirationDate,
-                CustomerId = requestProducts.CustomerId,
-                Price = requestProducts.Price
+                Customer = requestEmployments.Customer,
+                ProductName = requestEmployments.ProductName,
+                CustomerId = requestEmployments.CustomerId,
+                EmploymentId = requestEmployments.EmploymentId,
+                MakingTime = requestEmployments.MakingTime,
+                Price = requestEmployments.Price
             };
+            foreach (var schedule in requestEmployments.Schedules)
+            {
+                var viewSchedules = CreateViewSchedules(schedule);
+                empl.ViewSchedules.Add(viewSchedules);
+            }
+            return empl;
         }
 
-        //View to Products
-        public Products CreateProductsModelFromDb(ViewProduct virweProduct)
+        public ViewSchedules CreateViewSchedules(Schedules schedules)
         {
-            return new Products
+            return new ViewSchedules()
             {
-                Customer = virweProduct.Customer,
-                ProductName = virweProduct.ProductName,
-                Color = virweProduct.Color,
-                ExpirationDate = virweProduct.ExpirationDate,
-                ReleaseDate = virweProduct.ExpirationDate,
-                CustomerId = virweProduct.CustomerId,
-                Price = virweProduct.Price
+                StartWorkTime = schedules.StartWorkTime,
+                EmploymentEmployment = schedules.EmploymentEmployment,
+                EmploymentEmploymentId = schedules.EmploymentEmploymentId,
+                EndWorkTime = schedules.EndWorkTime,
+                IsAccessible = schedules.IsAccessible,
+                AllWorkTime = schedules.AllWorkTime
             };
+        }
+        public Schedules CreateDbSchedules(ViewSchedules viewSchedules)
+        {
+            return new Schedules()
+            {
+                StartWorkTime = viewSchedules.StartWorkTime,
+                EmploymentEmployment = viewSchedules.EmploymentEmployment,
+                EmploymentEmploymentId = viewSchedules.EmploymentEmploymentId,
+                EndWorkTime = viewSchedules.EndWorkTime,
+                IsAccessible = viewSchedules.IsAccessible,
+                AllWorkTime = viewSchedules.AllWorkTime
+            };
+        }
+        //View to Employments
+        public Employments CreateEmploymentsModelFromDb(ViewEmployments virweEmployments)
+        {
+            var employments = new Employments
+            {
+                Customer = virweEmployments.Customer,
+                ProductName = virweEmployments.ProductName,
+                CustomerId = virweEmployments.CustomerId,
+                Price = virweEmployments.Price,
+                MakingTime = virweEmployments.MakingTime,
+            };
+            foreach (var employmentsViewSchedule in virweEmployments.ViewSchedules)
+            {
+                var dbSchedules = CreateDbSchedules(employmentsViewSchedule);
+                employments.Schedules.Add(dbSchedules);
+            }
+            return employments;
         }
 
         //View products time of put
-        public void ProductPutMaker(ViewProduct product, Products productsInDb)
+        public void EmploymentPutMaker(ViewEmployments employments, Employments employmentsInDb)
         {
-            productsInDb.Id = product.CustomerId;
-            productsInDb.Price = product.Price;
-            productsInDb.ProductName = product.ProductName;
-            productsInDb.Color = product.Color;
-            productsInDb.CustomerId = product.CustomerId;
-            productsInDb.ExpirationDate = product.ExpirationDate;
-            productsInDb.ReleaseDate = product.ReleaseDate;
-            productsInDb.Customer = product.Customer;
+            employmentsInDb.EmploymentId = employments.CustomerId;
+            employmentsInDb.Price = employments.Price;
+            employmentsInDb.ProductName = employments.ProductName;
+            employmentsInDb.CustomerId = employments.CustomerId;
+            employmentsInDb.Customer = employments.Customer;
+            employmentsInDb.Schedules = (ICollection<Schedules>) employments.ViewSchedules;
+            for (var i = 0; i < employmentsInDb.Schedules.Count; i++)
+            {
+                _createViewSchedules = employments.ViewSchedules.ElementAt(i);
+                _createViewSchedules = CreateViewSchedules(employmentsInDb.Schedules.ElementAt(i));
+            }
         }
 
         //Customer time of put
         public void CustomerPutMaker(Customers customerDb, Customers customerLoadDb)
         {
             customerLoadDb.City = customerDb.City;
-            customerLoadDb.Products = customerDb.Products;
+            customerLoadDb.Employments = customerDb.Employments;
             customerLoadDb.BirthDate = customerDb.BirthDate;
             customerLoadDb.Country = customerDb.Country;
             customerLoadDb.Email = customerDb.Email;

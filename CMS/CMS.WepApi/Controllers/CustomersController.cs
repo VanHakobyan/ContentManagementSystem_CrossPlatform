@@ -32,11 +32,12 @@ namespace CMS.WepApi.Controllers
 
         
         [Produces("text/html")]
-        [HttpGet("{day}")]
-        [Route("/log/")]
+        [HttpGet("log/{day}")]
+       // [Route("")]
         public async Task<string> GetLogs([FromRoute] string day)
         {
-            return await System.IO.File.ReadAllTextAsync($"{Environment.CurrentDirectory}\\Logs\\nlog-own-2017-11-{day}.html");
+              var a=  await System.IO.File.ReadAllTextAsync($"{Environment.CurrentDirectory}\\Logs\\nlog-all-2017-11-{day}.html");
+            return a;
         }
 
         // GET: api/Customers/5

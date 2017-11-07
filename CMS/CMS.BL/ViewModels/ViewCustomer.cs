@@ -8,7 +8,7 @@ namespace CMS.BL.ViewModels
     {
         public ViewCustomer()
         {
-            Products = new HashSet<ViewProduct>();
+            Products = new HashSet<ViewEmployments>();
         }
         [Display(Name = "First Name")]
         [Required, StringLength(60)]
@@ -37,6 +37,6 @@ namespace CMS.BL.ViewModels
         [DataType(DataType.Text)]
         public string City { get; set; }
 
-        public ICollection<ViewProduct> Products { get; set; }
+        public ICollection<ViewEmployments> Products { get; set; }
     }
 }

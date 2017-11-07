@@ -7,7 +7,7 @@ namespace CMS.DAL.Models
     {
         public Customers()
         {
-            Products = new HashSet<Products>();
+            Employments = new HashSet<Employments>();
         }
 
         public int Id { get; set; }
@@ -19,6 +19,6 @@ namespace CMS.DAL.Models
         public string Country { get; set; }
         public string City { get; set; }
 
-        public ICollection<Products> Products { get; set; }
+        public ICollection<Employments> Employments { get; set; }
     }
 }
