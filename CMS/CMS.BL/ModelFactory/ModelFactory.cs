@@ -26,7 +26,7 @@ namespace CMS.BL.ModelFactory
             foreach (var employment in customers.Employments)
             {
                 var productsModelFromDb = CreateEmploymentsViewModel(employment);
-                c.Products.Add(productsModelFromDb);
+                c.Employments.Add(productsModelFromDb);
             }
             return c;
         }
@@ -46,8 +46,8 @@ namespace CMS.BL.ModelFactory
             };
 
             //if not contains employments
-            if (customer.Products == null) return c;
-            foreach (var products in customer.Products)
+            if (customer.Employments == null) return c;
+            foreach (var products in customer.Employments)
             {
                 var productsModelFromDb = CreateEmploymentsModelFromDb(products);
                 c.Employments.Add(productsModelFromDb);
@@ -63,7 +63,6 @@ namespace CMS.BL.ModelFactory
                 Customer = requestEmployments.Customer,
                 ProductName = requestEmployments.ProductName,
                 CustomerId = requestEmployments.CustomerId,
-                EmploymentId = requestEmployments.EmploymentId,
                 MakingTime = requestEmployments.MakingTime,
                 Price = requestEmployments.Price
             };

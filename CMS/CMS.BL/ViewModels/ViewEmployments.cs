@@ -12,7 +12,6 @@ namespace CMS.BL.ViewModels
         {
             ViewSchedules = new HashSet<ViewSchedules>();
         }
-        public int EmploymentId { get; set; }
         public string ProductName { get; set; }
         public string Price { get; set; }
         public DateTime? MakingTime { get; set; }

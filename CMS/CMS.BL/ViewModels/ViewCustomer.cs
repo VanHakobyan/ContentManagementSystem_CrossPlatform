@@ -8,7 +8,7 @@ namespace CMS.BL.ViewModels
     {
         public ViewCustomer()
         {
-            Products = new HashSet<ViewEmployments>();
+            Employments = new HashSet<ViewEmployments>();
         }
         [Display(Name = "First Name")]
         [Required, StringLength(60)]
@@ -28,7 +28,7 @@ namespace CMS.BL.ViewModels
         [Required]
         [Display(Name = "Phone Number")]
         [DataType(DataType.PhoneNumber)]
-        [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone Number")]
+        //[RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid Phone Number")]
         public string PhoneNumber { get; set; }
 
         [DataType(DataType.Text)]
@@ -37,6 +37,6 @@ namespace CMS.BL.ViewModels
         [DataType(DataType.Text)]
         public string City { get; set; }
 
-        public ICollection<ViewEmployments> Products { get; set; }
+        public ICollection<ViewEmployments> Employments { get; set; }
     }
 }
