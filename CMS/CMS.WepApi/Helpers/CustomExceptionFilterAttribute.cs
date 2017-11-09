@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace CMS.WepApi.Helpers
@@ -37,15 +38,15 @@ namespace CMS.WepApi.Helpers
                     StatusCode = (int?)HttpStatusCode.Conflict
                 };
             }
-            //TODO: check ef exceptions
-            //if (context.Exception is )
-            //{
-            //    context.Result = new ContentResult
-            //    {
-            //        Content = $"{actionName}\n{exceptionMessage}\n{innerExceptionMessage}\n{exceptionStack}\n",
-            //        ContentType = "Bad Request"
-            //    };
-            //}
+           
+            if (context.Exception is DbUpdateException)
+            {
+                context.Result = new ContentResult
+                {
+                    Content = $"{actionName}\n{exceptionMessage}\n{innerExceptionMessage}\n{exceptionStack}\n",
+                    ContentType = "Bad Request"
+                };
+            }
             if (context.Exception is NotImplementedException)
             {
                 context.Result = new ContentResult
