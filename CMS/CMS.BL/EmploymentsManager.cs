@@ -13,30 +13,32 @@ namespace CMS.BL
         private CMSContext db = new CMSContext();
         private readonly ModelFactory.ModelFactory factory = new ModelFactory.ModelFactory();
         // GET: api/Employments
-        public IEnumerable<ViewEmployments> GetProducts()
+        public IEnumerable<ViewEmployments> GetEmployments()
         {
             return db.Employments.Select(product => factory.CreateEmploymentsViewModel(product)).ToList();
         }
 
         // GET: api/Employments/5
-        public async Task<ViewEmployments> GetProductsById(int id)
+        public async Task<ViewEmployments> GetEmploymentsById(int id)
         {
             return factory.CreateEmploymentsViewModel(await db.Employments.SingleOrDefaultAsync(m => m.EmploymentId == id));
         }
 
         // PUT: api/Employments/5
-        public async Task<ViewEmployments> PutProducts(int id, ViewEmployments employments)
+        public async Task<ViewEmployments> PutEmployments(int id, ViewEmployments employments)
         {
             //var productsModelFromDb = factory.CreateEmploymentsModelFromDb(employments);
             var employmentsInDb = await db.Employments.FirstOrDefaultAsync(x => x.EmploymentId == id);
+
             db.Employments.Attach(employmentsInDb);
             factory.EmploymentPutMaker(employments, employmentsInDb);
             db.SaveChanges();
+
             return employments;
         }
 
         // POST: api/Employments
-        public async Task<ViewEmployments> PostProducts(ViewEmployments employments)
+        public async Task<ViewEmployments> PostEmployments(ViewEmployments employments)
         {
             db.Employments.Add(factory.CreateEmploymentsModelFromDb(employments));
             await db.SaveChangesAsync();
@@ -44,14 +46,15 @@ namespace CMS.BL
         }
 
         // DELETE: api/Employments/5
-        public async Task<ViewEmployments> DeleteProducts(int id)
+        public async Task<ViewEmployments> DeleteEmployments(int id)
         {
-            var employments = await db.Employments.SingleOrDefaultAsync(m => m.EmploymentId == id);
+            var employments = await db.Employments.Include(x => x.Schedules).SingleOrDefaultAsync(m => m.EmploymentId == id);
+            db.Schedules.RemoveRange(employments.Schedules);
             db.Employments.Remove(employments);
             await db.SaveChangesAsync();
             return factory.CreateEmploymentsViewModel(employments);
         }
-        public bool ProductsExists(int id)
+        public bool EmploymentsExists(int id)
         {
             return db.Employments.Any(e => e.EmploymentId == id);
         }

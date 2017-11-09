@@ -25,54 +25,54 @@ namespace CMS.WepApi.Controllers
 
         // GET: api/Employments
         [HttpGet]
-        public IEnumerable<ViewEmployments> GetProducts()
+        public IEnumerable<ViewEmployments> GetEmployments()
         {
-            return _employmentsManager.GetProducts();
+            return _employmentsManager.GetEmployments();
         }
 
         // GET: api/Employments/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetProducts([FromRoute] int id)
+        public async Task<IActionResult> GetEmployments([FromRoute] int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var products = await _employmentsManager.GetProductsById(id);
-            if (products == null)
+            var employments = await _employmentsManager.GetEmploymentsById(id);
+            if (employments == null)
                 return NotFound();
-            return Ok(products);
+            return Ok(employments);
         }
 
         // PUT: api/Employments/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProducts([FromRoute] int id, [FromBody] ViewEmployments employments)
+        public async Task<IActionResult> PutEmployments([FromRoute] int id, [FromBody] ViewEmployments employments)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-           if (!_employmentsManager.ProductsExists(id))
+           if (!_employmentsManager.EmploymentsExists(id))
                 return NotFound();
-            return Ok(await _employmentsManager.PutProducts(id, employments));
+            return Ok(await _employmentsManager.PutEmployments(id, employments));
         }
 
         // POST: api/Employments
         [HttpPost]
-        public async Task<IActionResult> PostProducts([FromBody] ViewEmployments employments)
+        public async Task<IActionResult> PostEmployments([FromBody] ViewEmployments employments)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var postProducts = await _employmentsManager.PostProducts(employments);
-            return CreatedAtAction("GetProducts",  postProducts);
+            var postEmployments = await _employmentsManager.PostEmployments(employments);
+            return CreatedAtAction("GetEmployments", postEmployments);
         }
 
         // DELETE: api/Employments/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProducts([FromRoute] int id)
+        public async Task<IActionResult> DeleteEmployments([FromRoute] int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var products = await _employmentsManager.DeleteProducts(id);
-            if (products == null)
+            var employments = await _employmentsManager.DeleteEmployments(id);
+            if (employments == null)
                 return NotFound();
-            return Ok(products);
+            return Ok(employments);
         }
 
         protected override void Dispose(bool disposing)

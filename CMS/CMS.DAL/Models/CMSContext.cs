@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System.Configuration;
+﻿using System;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+
 namespace CMS.DAL.Models
 {
     public partial class CMSContext : DbContext
@@ -8,13 +9,12 @@ namespace CMS.DAL.Models
         public virtual DbSet<Customers> Customers { get; set; }
         public virtual DbSet<Employments> Employments { get; set; }
         public virtual DbSet<Schedules> Schedules { get; set; }
-        public IConfiguration Configuration { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-
-                optionsBuilder.UseSqlServer(@"Server=tcp:vh.database.windows.net;Integrated Security=false;Initial Catalog=CMS;User id=vanhakobyan1996;Password=VAN606580$$;Encrypt=True;persist security info=True;");
+               optionsBuilder.UseSqlServer(@"Server=tcp:vh.database.windows.net;Integrated Security=false;Initial Catalog=CMS;User id=vanhakobyan1996;Password=VAN606580$$;Encrypt=True;persist security info=True;");
             }
         }
 
@@ -42,11 +42,11 @@ namespace CMS.DAL.Models
 
                 entity.Property(e => e.CustomerId).HasColumnName("Customer_Id");
 
+                entity.Property(e => e.EmploymentName).IsRequired();
+
                 entity.Property(e => e.MakingTime).HasColumnType("datetime");
 
                 entity.Property(e => e.Price).IsRequired();
-
-                entity.Property(e => e.ProductName).IsRequired();
 
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Employments)

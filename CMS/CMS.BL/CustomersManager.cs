@@ -47,18 +47,36 @@ namespace CMS.BL
         public async Task<ViewCustomer> PostCustomers(ViewCustomer customer)
         {
             var modelFromViewModel = factory.CreateCustumerModelFromViewModel(customer);
-            db.Customers.Add(modelFromViewModel);
-            await db.SaveChangesAsync();
+            try
+            {
+                await db.Customers.AddAsync(modelFromViewModel);
+                await db.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
             return customer;
         }
 
         // DELETE: api/Customers/5
         public async Task<ViewCustomer> DeleteCustomers(int id)
         {
-            var customers = await db.Customers.SingleOrDefaultAsync(m => m.Id == id);
-            db.Customers.Remove(customers);
-            await db.SaveChangesAsync();
-            return factory.CreateViewCustumerModelFromDb(customers);
+            try
+            {
+                var customers = await db.Customers.Include(x=>x.Employments).SingleOrDefaultAsync(m => m.Id == id);
+                db.RemoveRange(customers.Employments);
+                db.RemoveRange(customers.Employments.SelectMany(x => x.Schedules));
+                db.Customers.Remove(customers);
+                await db.SaveChangesAsync();
+                return factory.CreateViewCustumerModelFromDb(customers);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         public bool CustomersExists(int id)
         {

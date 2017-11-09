@@ -8,8 +8,6 @@ namespace CMS.BL.ModelFactory
 {
     public class ModelFactory
     {
-        private ViewSchedules _createViewSchedules;
-
         //Customers to view 
         public ViewCustomer CreateViewCustumerModelFromDb(Customers customers)
         {
@@ -61,7 +59,7 @@ namespace CMS.BL.ModelFactory
             var empl = new ViewEmployments
             {
                 Customer = requestEmployments.Customer,
-                ProductName = requestEmployments.ProductName,
+                EmploymentName = requestEmployments.EmploymentName,
                 CustomerId = requestEmployments.CustomerId,
                 MakingTime = requestEmployments.MakingTime,
                 Price = requestEmployments.Price
@@ -104,7 +102,7 @@ namespace CMS.BL.ModelFactory
             var employments = new Employments
             {
                 Customer = virweEmployments.Customer,
-                ProductName = virweEmployments.ProductName,
+                EmploymentName = virweEmployments.EmploymentName,
                 CustomerId = virweEmployments.CustomerId,
                 Price = virweEmployments.Price,
                 MakingTime = virweEmployments.MakingTime,
@@ -120,16 +118,14 @@ namespace CMS.BL.ModelFactory
         //View products time of put
         public void EmploymentPutMaker(ViewEmployments employments, Employments employmentsInDb)
         {
-            employmentsInDb.EmploymentId = employments.CustomerId;
             employmentsInDb.Price = employments.Price;
-            employmentsInDb.ProductName = employments.ProductName;
+            employmentsInDb.EmploymentName = employments.EmploymentName;
             employmentsInDb.CustomerId = employments.CustomerId;
             employmentsInDb.Customer = employments.Customer;
-            employmentsInDb.Schedules = (ICollection<Schedules>) employments.ViewSchedules;
+            employmentsInDb.Schedules = new List<Schedules>();
             for (var i = 0; i < employmentsInDb.Schedules.Count; i++)
             {
-                _createViewSchedules = employments.ViewSchedules.ElementAt(i);
-                _createViewSchedules = CreateViewSchedules(employmentsInDb.Schedules.ElementAt(i));
+                CreateViewSchedules(employmentsInDb.Schedules.ElementAt(i));
             }
         }
 
