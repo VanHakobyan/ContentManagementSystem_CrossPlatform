@@ -15,19 +15,17 @@ namespace CMS.WepApi.Controllers
     public class EmploymentsController : Controller
     {
         private static ILogger Logger { get; set; }
-        private readonly EmploymentsManager _employmentsManager;
-        public EmploymentsController(ILoggerFactory loggerFactory,IServiceProvider serviceProvider)
+        private readonly EmploymentsManager employmentsManager;
+        public EmploymentsController()
         {
-            Logger = loggerFactory.CreateLogger(GetType().Namespace);
-            Logger.LogInformation("created customersController");
-            _employmentsManager = new EmploymentsManager();
+          employmentsManager = new EmploymentsManager();
         }
 
         // GET: api/Employments
         [HttpGet]
         public IEnumerable<ViewEmployments> GetEmployments()
         {
-            return _employmentsManager.GetEmployments();
+            return employmentsManager.GetEmployments();
         }
 
         // GET: api/Employments/5
@@ -36,7 +34,7 @@ namespace CMS.WepApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var employments = await _employmentsManager.GetEmploymentsById(id);
+            var employments = await employmentsManager.GetEmploymentsById(id);
             if (employments == null)
                 return NotFound();
             return Ok(employments);
@@ -48,9 +46,9 @@ namespace CMS.WepApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-           if (!_employmentsManager.EmploymentsExists(id))
+           if (!employmentsManager.EmploymentsExists(id))
                 return NotFound();
-            return Ok(await _employmentsManager.PutEmployments(id, employments));
+            return Ok(await employmentsManager.PutEmployments(id, employments));
         }
 
         // POST: api/Employments
@@ -59,7 +57,7 @@ namespace CMS.WepApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var postEmployments = await _employmentsManager.PostEmployments(employments);
+            var postEmployments = await employmentsManager.PostEmployments(employments);
             return CreatedAtAction("GetEmployments", postEmployments);
         }
 
@@ -69,7 +67,7 @@ namespace CMS.WepApi.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var employments = await _employmentsManager.DeleteEmployments(id);
+            var employments = await employmentsManager.DeleteEmployments(id);
             if (employments == null)
                 return NotFound();
             return Ok(employments);
@@ -77,7 +75,7 @@ namespace CMS.WepApi.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            if (disposing) _employmentsManager.Dispose();
+            if (disposing) employmentsManager.Dispose();
         }
     }
 }

@@ -32,23 +32,22 @@ namespace CMS.WepApi
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            loggerFactory.AddNLog();
-
-            //Enable ASP.NET Core features (NLog.web) - only needed for ASP.NET Core users
-            app.AddNLogWeb();
-
-            //needed for non-NETSTANDARD platforms: configure nlog.config in your project root. NB: you need NLog.Web.AspNetCore package for this. 
-            env.ConfigureNLog("nlog.config");
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBrowserLink();
             }
+            else
+            {
+                app.UseExceptionHandler("/Customers/Error");
+            }
+            app.UseStatusCodePagesWithReExecute("/Errors/{0}/.html");
             app.UseMvc(routes =>
             {
-               
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");

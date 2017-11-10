@@ -16,11 +16,9 @@ namespace CMS.WepApi.Controllers
     {
         private static ILogger Logger { get; set; }
         private readonly CustomersManager customersManager;
-        public CustomersController(ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
+        public CustomersController()
         {
-            Logger = loggerFactory.CreateLogger(GetType().Namespace);
-            Logger.LogInformation("created customersController");
-            customersManager = new CustomersManager(); 
+            customersManager = new CustomersManager();
         }
 
         // GET: api/Customers
@@ -30,23 +28,13 @@ namespace CMS.WepApi.Controllers
             return customersManager.GetCustomers();
         }
 
-        
-        [Produces("text/html")]
-        [HttpGet("log/{day}")]
-       // [Route("")]
-        public async Task<string> GetLogs([FromRoute] string day)
-        {
-              var a=  await System.IO.File.ReadAllTextAsync($"{Environment.CurrentDirectory}\\Logs\\nlog-all-2017-11-{day}.html");
-            return a;
-        }
-
         // GET: api/Customers/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCustomers([FromRoute] int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            var customers =await customersManager.GetCustomersById(id);
+            var customers = await customersManager.GetCustomersById(id);
             if (customers == null)
                 return NotFound();
             return Ok(customers);
