@@ -12,7 +12,7 @@ namespace CMS.BL
     {
         private readonly CMSContext db = new CMSContext();
         private readonly ModelFactory.ModelFactory factory = new ModelFactory.ModelFactory();
-        
+
         //TODO: Implement  in projct 
         //private void Update<T>(T entity) where T : class
         //{
@@ -47,36 +47,21 @@ namespace CMS.BL
         public async Task<ViewCustomer> PostCustomers(ViewCustomer customer)
         {
             var modelFromViewModel = factory.CreateCustumerModelFromViewModel(customer);
-            try
-            {
-                await db.Customers.AddAsync(modelFromViewModel);
-                await db.SaveChangesAsync();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            await db.Customers.AddAsync(modelFromViewModel);
+            await db.SaveChangesAsync();
             return customer;
         }
 
         // DELETE: api/Customers/5
         public async Task<ViewCustomer> DeleteCustomers(int id)
         {
-            try
-            {
-                var customers = await db.Customers.Include(x=>x.Employments).SingleOrDefaultAsync(m => m.Id == id);
-                db.RemoveRange(customers.Employments);
-                db.RemoveRange(customers.Employments.SelectMany(x => x.Schedules));
-                db.Customers.Remove(customers);
-                await db.SaveChangesAsync();
-                return factory.CreateViewCustumerModelFromDb(customers);
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            //ADO.NET query
+            //await db.Database.ExecuteSqlCommandAsync($"Delete from customers where id={id}");
+            //db.RemoveRange(customers.Employments);
+            var customers = await db.Customers/*.Include(x=>x.Employments)*/.FirstOrDefaultAsync(m => m.Id == id);
+            db.Remove(customers);
+            await db.SaveChangesAsync();
+            return factory.CreateViewCustumerModelFromDb(customers);
         }
         public bool CustomersExists(int id)
         {

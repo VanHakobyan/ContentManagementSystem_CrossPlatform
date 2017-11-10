@@ -14,7 +14,7 @@ namespace CMS.DAL.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-               optionsBuilder.UseSqlServer(@"Server=tcp:vh.database.windows.net;Integrated Security=false;Initial Catalog=CMS;User id=vanhakobyan1996;Password=VAN606580$$;Encrypt=True;persist security info=True;");
+                optionsBuilder.UseSqlServer(@"Server=tcp:vh.database.windows.net;Integrated Security=false;Initial Catalog=CMS;User id=vanhakobyan1996;Password=VAN606580$$;Encrypt=True;persist security info=True;");
             }
         }
 
@@ -38,7 +38,7 @@ namespace CMS.DAL.Models
                 entity.HasKey(e => e.EmploymentId);
 
                 entity.HasIndex(e => e.CustomerId)
-                    .HasName("IX_FK_CustomerEmploymnets");
+                    .HasName("IX_FK_CustomerEmployments");
 
                 entity.Property(e => e.CustomerId).HasColumnName("Customer_Id");
 
@@ -51,16 +51,12 @@ namespace CMS.DAL.Models
                 entity.HasOne(d => d.Customer)
                     .WithMany(p => p.Employments)
                     .HasForeignKey(d => d.CustomerId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_CustomerEmploymnets");
+                    .HasConstraintName("FK_CustomerEmployments");
             });
 
             modelBuilder.Entity<Schedules>(entity =>
             {
                 entity.HasKey(e => e.ScheduleId);
-
-                entity.HasIndex(e => e.EmploymentEmploymentId)
-                    .HasName("IX_FK_EmploymnetsSchedules");
 
                 entity.Property(e => e.AllWorkTime).HasColumnType("datetime");
 
@@ -73,8 +69,7 @@ namespace CMS.DAL.Models
                 entity.HasOne(d => d.EmploymentEmployment)
                     .WithMany(p => p.Schedules)
                     .HasForeignKey(d => d.EmploymentEmploymentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_EmploymnetsSchedules");
+                    .HasConstraintName("FK_EmploymentsSchedules");
             });
         }
     }
