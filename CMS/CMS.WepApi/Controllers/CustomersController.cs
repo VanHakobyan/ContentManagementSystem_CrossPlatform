@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 namespace CMS.WepApi.Controllers
 {
-    //[CustomExceptionFilter]
+    [CustomExceptionFilter]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class CustomersController : Controller

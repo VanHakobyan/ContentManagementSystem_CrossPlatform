@@ -8,7 +8,6 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace CMS.WepApi.Helpers
 {
@@ -28,6 +27,7 @@ namespace CMS.WepApi.Helpers
                     ContentType = "Bad Request",
                     StatusCode = (int?)HttpStatusCode.BadRequest
                 };
+                context.ExceptionHandled = true;
             }
             if (context.Exception is DataException)
             {
@@ -37,6 +37,7 @@ namespace CMS.WepApi.Helpers
                     ContentType = "throwed DataBase Exception",
                     StatusCode = (int?)HttpStatusCode.Conflict
                 };
+                context.ExceptionHandled = true;
             }
            
             if (context.Exception is DbUpdateException)
@@ -46,6 +47,7 @@ namespace CMS.WepApi.Helpers
                     Content = $"{actionName}\n{exceptionMessage}\n{innerExceptionMessage}\n{exceptionStack}\n",
                     ContentType = "Bad Request"
                 };
+                context.ExceptionHandled = true;
             }
             if (context.Exception is NotImplementedException)
             {
@@ -55,6 +57,7 @@ namespace CMS.WepApi.Helpers
                     ContentType = "throwed Not Implemented Exception",
                     StatusCode = (int?)HttpStatusCode.Conflict
                 };
+                context.ExceptionHandled = true;
             }
             if (context.Exception is FileNotFoundException)
             {
@@ -64,6 +67,7 @@ namespace CMS.WepApi.Helpers
                     ContentType = "Incorrect file",
                     StatusCode = (int?)HttpStatusCode.NotImplemented
                 };
+                context.ExceptionHandled = true;
             }
             if (context.Exception is IndexOutOfRangeException)
             {
@@ -73,6 +77,7 @@ namespace CMS.WepApi.Helpers
                     ContentType = "Invalid Type of File",
                     StatusCode = (int?)HttpStatusCode.NotImplemented
                 };
+                context.ExceptionHandled = true;
             }
             if (context.Exception is IOException)
             {
@@ -82,6 +87,7 @@ namespace CMS.WepApi.Helpers
                     ContentType = "throwed IO Exception",
                     StatusCode = (int?)HttpStatusCode.Conflict
                 };
+                context.ExceptionHandled = true;
             }
             else
             {
@@ -91,9 +97,9 @@ namespace CMS.WepApi.Helpers
                     ContentType = "Internal Server Error. Please Contact your Administrator.",
                     StatusCode = (int?)HttpStatusCode.InternalServerError
                 };
+                context.ExceptionHandled = true;
             }
 
-            context.ExceptionHandled = true;
         }
 
     }
