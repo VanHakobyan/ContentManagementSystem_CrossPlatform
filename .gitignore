@@ -47,7 +47,7 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 **/Properties/launchSettings.json
-
+appsettings.json
 *_i.c
 *_p.c
 *_i.h
@@ -286,6 +286,4 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
-/CMS.WepApi/CMS.Database
-/CMS/CMS.Database
-**/CMS/CMS.WebApi/appsettings.json
+
