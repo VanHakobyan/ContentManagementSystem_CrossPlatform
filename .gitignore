@@ -288,3 +288,4 @@ __pycache__/
 *.xsd.cs
 /CMS.WepApi/CMS.Database
 /CMS/CMS.Database
+/CMS/CMS.WebApi/appsettings.json
