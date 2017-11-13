@@ -1,6 +1,9 @@
 ﻿using System;
+using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.Win32.SafeHandles;
+using Newtonsoft.Json;
 
 namespace CMS.DAL.Models
 {
@@ -14,9 +17,11 @@ namespace CMS.DAL.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                
+                optionsBuilder.UseSqlServer(ConString.GetValue());
             }
         }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
