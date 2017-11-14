@@ -7,7 +7,7 @@ namespace CMS.DAL
     {
         public static string GetValue()
         {
-            return JsonConvert.DeserializeObject<Root>(File.ReadAllText($"{Directory.GetCurrentDirectory()}\\appsettings.json")).ConnectionStrings.DefaultConnection;
+            return JsonConvert.DeserializeObject<Root>(new StreamReader(@".\Properties\appsettings.json", System.Text.Encoding.Default).ReadToEnd()).ConnectionStrings.DefaultConnection;
         }
         public class Root
         {
