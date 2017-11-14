@@ -1,0 +1,185 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="Images/favicon.png">    
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width"/>
+    <title>List of Customers</title>
+    <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet"/>
+    <script src="lib/jquery/dist/jquery.js"></script>
+</head>
+<body>
+    <h2 align="center">List of Customers</h2>
+
+    <table class="table table-condensed table-striped table-bordered">
+        <thead><tr><th>FirstName</th><th>LastName</th><th>BirthDate</th><th>Email</th><th>PhoneNumber</th><th>Country</th><th>City</th></tr></thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        function GetUsers() {
+            $.ajax({
+                url: '/api/customers/',
+                type: 'GET',
+                contentType: "application/json",
+                success: function (users) {
+                    var rows = "";
+                    $.each(users,
+                        function (index, user) {
+                            rows += "<tr><td>" + user.firstName + "</td><td>" + user.lastName + "</td><td>" + user.birthDate + "</td><td>" + user.email + "</td><td>" + user.phoneNumber + "</td><td>" + user.country + "</td><td>" + user.city + "</td></tr>";
+                        });
+                    $("table tbody").append(rows);
+                }
+            });
+        }
+        var row = function (user) {
+            return "<tr data-rowid='" + user.firstName + "'>" +
+                "" + "<td>" + user.firstName + "</td>"
+                + "<td>" + user.lastName + "</td>"
+                + " <td>" + user.birthDate + "</td>"
+                + "<td>" + user.email + "</td> <td>"
+                + "<td>" + user.phoneNumber + "</td> <td>"
+                + "<td>" + user.country + "</td> <td>" +
+
+                "<td><a class='editLink' data-id='" + user.id + "'>Save</a> | " +
+                "<a class='removeLink' data-id='" + user.id + "'>Reset</a></td></tr>";
+        }
+
+        function CreateUser(firstName, lastName, birthDate, email, phoneNumber, country, city) {
+            $.ajax({
+                url: "api/customers",
+                contentType: "application/json",
+                method: "POST",
+                data: JSON.stringify({
+                    firstName: firstName,
+                    lastName: lastName,
+                    birthDate: birthDate,
+                    email: email,
+                    phoneNumber: phoneNumber,
+                    country: country,
+                    city: city
+                }),
+                success: function (user) {
+                    reset();
+                    $("table tbody").append(row(user));
+                }
+            });
+        }
+
+        $("#reset").click(function (e) {
+
+            e.preventDefault();
+            reset();
+        });
+
+        $("form").submit(function (e) {
+            e.preventDefault();
+            var firtsName = this.elements["firstName"].value;
+            var lastName = this.elements["lastName"].value;
+            var birthDate = this.elements["birthDate"].value;
+            var email = this.elements["email"].value;
+            var phoneNumber = this.elements["phoneNumber"].value;
+            var country = this.elements["country"].value;
+            var city = this.elements["city"].value;
+            CreateUser(firtsName, lastName, birthDate, email, phoneNumber, country, city);
+
+        });
+
+        GetUsers();
+
+    </script>
+    <style>
+        /* form elements */
+        form {
+            margin: 10px;
+            padding: 0 5px;
+            background: #F5F5F5;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        input {
+            padding: 2px;
+            border: 1px solid #eee;
+            font: normal 1em Verdana, sans-serif;
+            color: #777;
+        }
+
+        textarea {
+            width: 400px;
+            padding: 2px;
+            font: normal 1em Verdana, sans-serif;
+            border: 1px solid #eee;
+            height: 100px;
+            display: block;
+            color: #777;
+        }
+
+        input.button {
+            font: bold 12px Arial, Sans-serif;
+            height: 24px;
+            margin: 0;
+            padding: 2px 3px;
+            color: #333;
+        }
+
+        table {
+            margin: 10px;
+            padding: 0 5px;
+            background: #F5F5F5;
+        }
+
+        h2 {
+            color: red;
+            padding: initial;
+            font-family: italic
+        }
+
+        h3 {
+            color: grey;
+            display: contents;
+            height: 15px;
+        }
+    </style>
+    <h3 align="center"> Add Customer </h3><br>
+    <form name="userForm" margin="5">
+        <input type="hidden" id="id" name="id" value="0" />
+        <div class="form-group">
+            <label for="firstName">FirstName</label>
+            <input id="firstName" class="form-control" name="firstName" />
+        </div>
+        <div class="form-group">
+            <label for="lastName">LastName</label>
+            <input id="lastName" class="form-control" name="lastName" />
+        </div>
+        <div class="form-group">
+            <label for="birthDate">BirthDate</label>
+            <input id="birthDate" class="form-control" name="birthDate" />
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input id="email" class="form-control" name="email" />
+        </div>
+        <div class="form-group">
+            <label for="phoneNumber">PhoneNumber</label>
+            <input id="phoneNumber" class="form-control" name="phoneNumber" />
+        </div>
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input id="country" class="form-control" name="country" />
+        </div>
+        <div class="form-group">
+            <label for="city">City</label>
+            <input id="city" class="form-control" name="city" />
+        </div>
+        <div align="center" class="panel-body">
+            <button type="submit" class="btn btn-sm btn-primary">Save</button>
+            <a id="reset" class="btn btn-sm btn-primary">Reset</a>
+        </div>
+    </form>
+</body>
+</html>

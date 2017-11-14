@@ -6,7 +6,8 @@ namespace CMS.DAL.Models
     public partial class Schedules
     {
         public int ScheduleId { get; set; }
-        public DateTime AllWorkTime { get; set; }
+        public Guid GuId { get; set; }
+        public double? AllWorkTime { get; set; }
         public DateTime? StartWorkTime { get; set; }
         public DateTime? EndWorkTime { get; set; }
         public bool? IsAccessible { get; set; }

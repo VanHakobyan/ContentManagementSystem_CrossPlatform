@@ -11,6 +11,7 @@ namespace CMS.DAL.Models
         }
 
         public int Id { get; set; }
+        public Guid GuId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime BirthDate { get; set; }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using CMS.BL.ViewModels;
 using CMS.DAL.Models;
@@ -20,6 +21,7 @@ namespace CMS.BL.ModelFactory
                 BirthDate = customers.BirthDate,
                 City = customers.City,
                 Country = customers.Country,
+                GuId = customers.GuId
             };
             foreach (var employment in customers.Employments)
             {
@@ -41,6 +43,7 @@ namespace CMS.BL.ModelFactory
                 BirthDate = customer.BirthDate,
                 City = customer.City,
                 Country = customer.Country,
+                GuId = Guid.NewGuid()
             };
 
             //if not contains employments
@@ -62,7 +65,8 @@ namespace CMS.BL.ModelFactory
                 EmploymentName = requestEmployments.EmploymentName,
                 CustomerId = requestEmployments.CustomerId,
                 MakingTime = requestEmployments.MakingTime,
-                Price = requestEmployments.Price
+                Price = requestEmployments.Price,
+                GuId = requestEmployments.GuId
             };
             foreach (var schedule in requestEmployments.Schedules)
             {
@@ -81,7 +85,8 @@ namespace CMS.BL.ModelFactory
                 EmploymentEmploymentId = schedules.EmploymentEmploymentId,
                 EndWorkTime = schedules.EndWorkTime,
                 IsAccessible = schedules.IsAccessible,
-                AllWorkTime = schedules.AllWorkTime
+                AllWorkTime = schedules.AllWorkTime,
+                GuId = schedules.GuId
             };
         }
         public Schedules CreateDbSchedules(ViewSchedules viewSchedules)
@@ -93,7 +98,8 @@ namespace CMS.BL.ModelFactory
                 EmploymentEmploymentId = viewSchedules.EmploymentEmploymentId,
                 EndWorkTime = viewSchedules.EndWorkTime,
                 IsAccessible = viewSchedules.IsAccessible,
-                AllWorkTime = viewSchedules.AllWorkTime
+                AllWorkTime = viewSchedules.AllWorkTime,
+                GuId = Guid.NewGuid()
             };
         }
         //View to Employments
@@ -106,6 +112,7 @@ namespace CMS.BL.ModelFactory
                 CustomerId = virweEmployments.CustomerId,
                 Price = virweEmployments.Price,
                 MakingTime = virweEmployments.MakingTime,
+                GuId = Guid.NewGuid()
             };
             foreach (var employmentsViewSchedule in virweEmployments.ViewSchedules)
             {

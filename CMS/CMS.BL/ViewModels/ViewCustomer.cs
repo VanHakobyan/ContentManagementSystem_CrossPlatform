@@ -10,6 +10,8 @@ namespace CMS.BL.ViewModels
         {
             Employments = new HashSet<ViewEmployments>();
         }
+        public Guid GuId { get; set; }
+
         [Display(Name = "First Name")]
         [Required, StringLength(60)]
         public string FirstName { get; set; }

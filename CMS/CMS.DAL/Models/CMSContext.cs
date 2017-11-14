@@ -1,9 +1,6 @@
 ﻿using System;
-using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.Win32.SafeHandles;
-using Newtonsoft.Json;
 
 namespace CMS.DAL.Models
 {
@@ -17,11 +14,9 @@ namespace CMS.DAL.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer(ConString.GetValue());
+                optionsBuilder.UseSqlServer(ConString.Value);
             }
         }
-
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +27,8 @@ namespace CMS.DAL.Models
                 entity.Property(e => e.Email).IsRequired();
 
                 entity.Property(e => e.FirstName).IsRequired();
+
+                entity.Property(e => e.GuId).HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.LastName).IsRequired();
 
@@ -49,7 +46,7 @@ namespace CMS.DAL.Models
 
                 entity.Property(e => e.EmploymentName).IsRequired();
 
-                entity.Property(e => e.MakingTime).HasColumnType("datetime");
+                entity.Property(e => e.GuId).HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.Price).IsRequired();
 
@@ -63,11 +60,11 @@ namespace CMS.DAL.Models
             {
                 entity.HasKey(e => e.ScheduleId);
 
-                entity.Property(e => e.AllWorkTime).HasColumnType("datetime");
-
                 entity.Property(e => e.EmploymentEmploymentId).HasColumnName("Employment_EmploymentId");
 
                 entity.Property(e => e.EndWorkTime).HasColumnType("datetime");
+
+                entity.Property(e => e.GuId).HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.StartWorkTime).HasColumnType("datetime");
 

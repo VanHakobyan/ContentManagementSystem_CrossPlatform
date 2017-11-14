@@ -38,13 +38,15 @@ namespace CMS.WepApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseBrowserLink();
+                //app.UseBrowserLink();
             }
             else
             {
                 app.UseExceptionHandler("/Customers/Error");
             }
-            app.UseStatusCodePagesWithReExecute("/Errors/{0}/.html");
+            //app.UseStatusCodePagesWithReExecute("/Errors/{0}/.html");
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseMvc(routes =>
             {
 
@@ -52,7 +54,7 @@ namespace CMS.WepApi
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");
             });
-            app.UseWelcomePage();
+            //app.UseWelcomePage();
             //app.UseMvc();
             //app.UseMvc(builder => builder.MapRoute("default", "{controller=Customers}/{action=Index}/{id?}"));
 
