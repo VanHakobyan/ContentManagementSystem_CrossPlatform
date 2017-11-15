@@ -40,7 +40,7 @@ namespace CMS.BL
             db.Customers.Attach(customerLoadDb);
             factory.CustomerPutMaker(customerDb, customerLoadDb);
             await db.SaveChangesAsync();
-            return viewCustomer;
+            return factory.CreateViewCustumerModelFromDb(customerLoadDb);
         }
 
         // POST: api/Customers

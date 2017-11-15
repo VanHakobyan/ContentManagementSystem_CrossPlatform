@@ -32,28 +32,29 @@ namespace CMS.BL.ModelFactory
         }
 
         //View to Customers
-        public Customers CreateCustumerModelFromViewModel(ViewCustomer customer)
+        public Customers CreateCustumerModelFromViewModel(ViewCustomer viewCustomer)
         {
-            var c = new Customers()
+            var customers = new Customers()
             {
-                FirstName = customer.FirstName,
-                LastName = customer.LastName,
-                PhoneNumber = customer.PhoneNumber,
-                Email = customer.Email,
-                BirthDate = customer.BirthDate,
-                City = customer.City,
-                Country = customer.Country,
+                FirstName = viewCustomer.FirstName,
+                LastName = viewCustomer.LastName,
+                PhoneNumber = viewCustomer.PhoneNumber,
+                Email = viewCustomer.Email,
+                BirthDate = viewCustomer.BirthDate,
+                City = viewCustomer.City,
+                Country = viewCustomer.Country,
                 GuId = Guid.NewGuid()
             };
-
+            if (viewCustomer.GuId==Guid.Empty)
+                viewCustomer.GuId = customers.GuId; 
             //if not contains employments
-            if (customer.Employments == null) return c;
-            foreach (var products in customer.Employments)
+            if (viewCustomer.Employments.Count == 0) return customers;
+            foreach (var products in viewCustomer.Employments)
             {
                 var productsModelFromDb = CreateEmploymentsModelFromDb(products);
-                c.Employments.Add(productsModelFromDb);
+                customers.Employments.Add(productsModelFromDb);
             }
-            return c;
+            return customers;
         }
 
         //Employments to View
@@ -147,6 +148,7 @@ namespace CMS.BL.ModelFactory
             customerLoadDb.FirstName = customerDb.FirstName;
             customerLoadDb.LastName = customerDb.LastName;
             customerLoadDb.PhoneNumber = customerDb.PhoneNumber;
+            customerDb.GuId = customerLoadDb.GuId;
         }
     }
 }
