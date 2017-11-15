@@ -19,7 +19,7 @@ define( [
 
 	"./core/init",
 	"./core/ready",
-	"./selector" // contains
+	"./selector"
 ], function( jQuery, pnum, access, rmargin, document, rcssNum, rnumnonpx, cssExpand, isHidden,
 	getStyles, swap, curCSS, adjustCSS, defaultDisplay, addGetHookIf, support, dataPriv ) {
 

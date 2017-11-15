@@ -18,6 +18,7 @@ define( [
 var rbrace = /^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,
 	rmultiDash = /[A-Z]/g;
 
+
 function dataAttr( elem, key, data ) {
 	var name;
 

@@ -3,7 +3,7 @@ define( [
 	"./var/rnotwhite"
 ], function( jQuery, rnotwhite ) {
 
-// Convert String-formatted options into Object-formatted ones
+
 function createOptions( options ) {
 	var object = {};
 	jQuery.each( options.match( rnotwhite ) || [], function( _, flag ) {

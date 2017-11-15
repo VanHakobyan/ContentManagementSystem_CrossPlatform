@@ -17,7 +17,6 @@ define( [
 	"./traversing"
 ], function( jQuery, document, rcssNum, cssExpand, rnotwhite,
 	isHidden, adjustCSS, defaultDisplay, dataPriv ) {
-
 var
 	fxNow, timerId,
 	rfxtypes = /^(?:toggle|show|hide)$/,

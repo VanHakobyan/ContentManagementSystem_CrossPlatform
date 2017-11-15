@@ -14,7 +14,7 @@ define( [
 var
 	version = "@VERSION",
 
-	// Define a local copy of jQuery
+
 	jQuery = function( selector, context ) {
 
 		// The jQuery object is actually just the init constructor 'enhanced'

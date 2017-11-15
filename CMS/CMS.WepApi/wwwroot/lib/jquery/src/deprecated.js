@@ -16,7 +16,6 @@ jQuery.fn.extend( {
 	},
 	undelegate: function( selector, types, fn ) {
 
-		// ( namespace ) or ( selector, types [, fn] )
 		return arguments.length === 1 ?
 			this.off( selector, "**" ) :
 			this.off( types, selector || "**", fn );

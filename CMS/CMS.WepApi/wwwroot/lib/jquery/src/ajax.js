@@ -12,7 +12,6 @@ define( [
 	"./event/trigger",
 	"./deferred"
 ], function( jQuery, document, rnotwhite, location, nonce, rquery ) {
-
 var
 	rhash = /#.*$/,
 	rts = /([?&])_=[^&]*/,
