@@ -54,7 +54,7 @@ namespace CMS.WepApi
                     name: "default",
                     template: "{controller=Main}/{action=Index}/{id?}");
             });
-            //app.UseWelcomePage();
+            app.UseWelcomePage();
             //app.UseMvc();
             //app.UseMvc(builder => builder.MapRoute("default", "{controller=Customers}/{action=Index}/{id?}"));
 
