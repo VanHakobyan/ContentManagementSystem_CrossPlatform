@@ -27,14 +27,17 @@ namespace CMS.BL
         // PUT: api/Employments/5
         public async Task<ViewEmployments> PutEmployments(int id, ViewEmployments employments)
         {
+            //TODO:Correct this schedul put 
             //var productsModelFromDb = factory.CreateEmploymentsModelFromDb(employments);
-            var employmentsInDb = await db.Employments.FirstOrDefaultAsync(x => x.EmploymentId == id);
+
+            var employmentsInDb = await db.Employments.Include(x => x.Schedules).SingleOrDefaultAsync(x => x.EmploymentId == id);
 
             db.Employments.Attach(employmentsInDb);
             factory.EmploymentPutMaker(employments, employmentsInDb);
             db.SaveChanges();
 
             return employments;
+
         }
 
         // POST: api/Employments

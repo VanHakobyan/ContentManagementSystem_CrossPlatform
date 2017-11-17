@@ -130,7 +130,8 @@ namespace CMS.BL.ModelFactory
             employmentsInDb.EmploymentName = employments.EmploymentName;
             employmentsInDb.CustomerId = employments.CustomerId;
             employmentsInDb.Customer = employments.Customer;
-            employmentsInDb.Schedules = new List<Schedules>();
+            //employments.GuId = employmentsInDb.GuId;
+            employmentsInDb.Schedules = (ICollection<Schedules>) employments.ViewSchedules;
             for (var i = 0; i < employmentsInDb.Schedules.Count; i++)
             {
                 CreateViewSchedules(employmentsInDb.Schedules.ElementAt(i));
