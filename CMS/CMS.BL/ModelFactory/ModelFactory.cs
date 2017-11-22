@@ -45,8 +45,8 @@ namespace CMS.BL.ModelFactory
                 Country = viewCustomer.Country,
                 GuId = Guid.NewGuid()
             };
-            if (viewCustomer.GuId==Guid.Empty)
-                viewCustomer.GuId = customers.GuId; 
+            if (viewCustomer.GuId == Guid.Empty)
+                viewCustomer.GuId = customers.GuId;
             //if not contains employments
             if (viewCustomer.Employments.Count == 0) return customers;
             foreach (var products in viewCustomer.Employments)
@@ -131,7 +131,7 @@ namespace CMS.BL.ModelFactory
             employmentsInDb.CustomerId = employments.CustomerId;
             employmentsInDb.Customer = employments.Customer;
             //employments.GuId = employmentsInDb.GuId;
-            employmentsInDb.Schedules = (ICollection<Schedules>) employments.ViewSchedules;
+            employmentsInDb.Schedules = (ICollection<Schedules>)employments.ViewSchedules;
             for (var i = 0; i < employmentsInDb.Schedules.Count; i++)
             {
                 CreateViewSchedules(employmentsInDb.Schedules.ElementAt(i));
@@ -150,6 +150,15 @@ namespace CMS.BL.ModelFactory
             customerLoadDb.LastName = customerDb.LastName;
             customerLoadDb.PhoneNumber = customerDb.PhoneNumber;
             customerDb.GuId = customerLoadDb.GuId;
+        }
+
+        public void ScedulePutMaker(Schedules schedulesInDb, ViewSchedules viewSchedules)
+        {
+            schedulesInDb.AllWorkTime = viewSchedules.AllWorkTime;
+            schedulesInDb.EndWorkTime = viewSchedules.EndWorkTime;
+            viewSchedules.GuId=schedulesInDb.GuId;
+            schedulesInDb.IsAccessible = viewSchedules.IsAccessible;
+            schedulesInDb.StartWorkTime = viewSchedules.StartWorkTime;
         }
     }
 }
