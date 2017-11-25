@@ -30,6 +30,13 @@ namespace CMS.BL
             return factory.CreateViewSchedules(schedules);
         }
 
+        // GET: api/Schedules/7d02c5fc-3f2c-42e0-b0c8-f420179d4201
+        public  async Task<ViewSchedules> GetSchedulesByGuid(Guid guid)
+        {
+            var schedules = await db.Schedules.SingleOrDefaultAsync(m => m.GuId == guid);
+            return schedules == null ? null : factory.CreateViewSchedules(schedules);
+        }
+
         // PUT: api/Schedules/5
         [HttpPut("{id}")]
         public async Task<ViewSchedules> PutSchedules(int id, ViewSchedules viewSchedules)
@@ -39,6 +46,11 @@ namespace CMS.BL
             factory.ScedulePutMaker(schedulesInDb, viewSchedules);
             await db.SaveChangesAsync();
             return factory.CreateViewSchedules(schedulesInDb);
+        }
+
+        public Task GetSchedules(Guid guid)
+        {
+            throw new NotImplementedException();
         }
 
         // POST: api/Schedules
@@ -66,5 +78,6 @@ namespace CMS.BL
         {
             return db.Schedules.Any(e => e.ScheduleId == id);
         }
+
     }
 }

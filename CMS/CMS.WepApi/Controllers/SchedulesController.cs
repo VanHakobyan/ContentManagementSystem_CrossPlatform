@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using CMS.BL;
 using CMS.BL.ViewModels;
@@ -21,11 +22,23 @@ namespace CMS.WepApi.Controllers
 
         // GET: api/Schedules/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetSchedules([FromRoute] int id)
+        public async Task<IActionResult> GetSchedulesById([FromRoute] int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var schedules = await schedulesManager.GetSchedules(id);
+            if (schedules == null)
+                return NotFound();
+            return Ok(schedules);
+        }
+
+        // GET: api/Schedules/2d88b44d-82e3-42b6-9f5c-1ac3696a3ec4
+        [HttpGet("{guid}")]
+        public async Task<IActionResult> GetSchedulesByGuid([FromRoute] Guid guid)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var schedules = await schedulesManager.GetSchedulesByGuid(guid);
             if (schedules == null)
                 return NotFound();
             return Ok(schedules);

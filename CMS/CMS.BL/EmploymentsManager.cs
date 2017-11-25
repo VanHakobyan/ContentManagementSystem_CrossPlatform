@@ -24,6 +24,11 @@ namespace CMS.BL
             return factory.CreateEmploymentsViewModel(await db.Employments.SingleOrDefaultAsync(m => m.EmploymentId == id));
         }
 
+        //GET api/Employments/7d02c5fc-3f2c-42e0-b0c8-f420179d4201
+        public async Task<ViewEmployments> GetEmploymentsByGuid(Guid guid)
+        {
+            return factory.CreateEmploymentsViewModel(await db.Employments.SingleOrDefaultAsync(m => m.GuId == guid));
+        }
         // PUT: api/Employments/5
         public async Task<ViewEmployments> PutEmployments(int id, ViewEmployments employments)
         {
@@ -66,5 +71,6 @@ namespace CMS.BL
         {
             db?.Dispose();
         }
+
     }
 }

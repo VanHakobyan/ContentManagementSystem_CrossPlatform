@@ -32,6 +32,13 @@ namespace CMS.BL
             return factory.CreateViewCustumerModelFromDb(customers);
         }
 
+        //GET api/Customers/ff247f5d-95c2-493e-a079-63d962138b19
+        public async Task<ViewCustomer> GetCustomersByGuid(Guid guid)
+        {
+            var customers = await db.Customers.SingleOrDefaultAsync(m => m.GuId == guid);
+            return factory.CreateViewCustumerModelFromDb(customers);
+        }
+
         // PUT: api/Customers/5
         public async Task<ViewCustomer> PutCustomers(int id, ViewCustomer viewCustomer)
         {
@@ -72,5 +79,6 @@ namespace CMS.BL
         {
             db?.Dispose();
         }
+
     }
 }

@@ -30,11 +30,23 @@ namespace CMS.WepApi.Controllers
 
         // GET: api/Employments/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEmployments([FromRoute] int id)
+        public async Task<IActionResult> GetEmploymentsById([FromRoute] int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var employments = await employmentsManager.GetEmploymentsById(id);
+            if (employments == null)
+                return NotFound();
+            return Ok(employments);
+        }
+
+        // GET: api/Employments/7d02c5fc-3f2c-42e0-b0c8-f420179d4201
+        [HttpGet("{guid}")]
+        public async Task<IActionResult> GetEmploymentsByGuid([FromRoute] Guid guid)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var employments = await employmentsManager.GetEmploymentsByGuid(guid);
             if (employments == null)
                 return NotFound();
             return Ok(employments);

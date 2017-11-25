@@ -30,11 +30,23 @@ namespace CMS.WepApi.Controllers
 
         // GET: api/Customers/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCustomers([FromRoute] int id)
+        public async Task<IActionResult> GetCustomerById([FromRoute] int id)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var customers = await customersManager.GetCustomersById(id);
+            if (customers == null)
+                return NotFound();
+            return Ok(customers);
+        }
+
+        // GET: api/Customers/ff247f5d-95c2-493e-a079-63d962138b19
+        [HttpGet("{guid}")]
+        public async Task<IActionResult> GetCustomerByGuid([FromRoute] Guid guid)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var customers = await customersManager.GetCustomersByGuid(guid);
             if (customers == null)
                 return NotFound();
             return Ok(customers);
@@ -58,7 +70,7 @@ namespace CMS.WepApi.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
             var postCustomers = await customersManager.PostCustomers(customer);
-            return CreatedAtAction("GetCustomers", postCustomers);
+            return CreatedAtAction("GetCustomerById", postCustomers);
         }
 
         // DELETE: api/Customers/5
