@@ -35,7 +35,7 @@ namespace CMS.BL
         //GET api/Customers/ff247f5d-95c2-493e-a079-63d962138b19
         public async Task<ViewCustomer> GetCustomersByGuid(Guid guid)
         {
-            var customers = await db.Customers.SingleOrDefaultAsync(m => m.GuId == guid);
+            var customers = await db.Customers.Include(x=>x.Employments)/*.ThenInclude(a=>a.Schedules)*/.SingleOrDefaultAsync(m => m.GuId == guid);
             return factory.CreateViewCustumerModelFromDb(customers);
         }
 
