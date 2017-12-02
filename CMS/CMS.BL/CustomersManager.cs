@@ -28,14 +28,14 @@ namespace CMS.BL
         // GET: api/Customers/5
         public async Task<ViewCustomer> GetCustomersById(int id)
         {
-            var customers = await db.Customers.SingleOrDefaultAsync(m => m.Id == id);
+            var customers = await db.Customers./*Include(x=>x.Employments).ThenInclude(x=>x.Schedules).*/SingleOrDefaultAsync(m => m.Id == id);
             return factory.CreateViewCustumerModelFromDb(customers);
         }
 
         //GET api/Customers/ff247f5d-95c2-493e-a079-63d962138b19
         public async Task<ViewCustomer> GetCustomersByGuid(Guid guid)
         {
-            var customers = await db.Customers.Include(x=>x.Employments)/*.ThenInclude(a=>a.Schedules)*/.SingleOrDefaultAsync(m => m.GuId == guid);
+            var customers = await db.Customers./*Include(x=>x.Employments).ThenInclude(a=>a.Schedules).*/SingleOrDefaultAsync(m => m.GuId == guid);
             return factory.CreateViewCustumerModelFromDb(customers);
         }
 
