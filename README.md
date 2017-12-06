@@ -20,7 +20,7 @@ ASP.NET Core is an open source and cloud-optimized web framework for developing 
 * It consists of modular components with minimal overhead, so you retain flexibility while constructing your solutions.
 * You can develop and run your ASP.NET Core apps cross-platform on Windows, Mac and Linux.
 
-<h3><po align= "center">ASP.NET Core - Middleware</p></h3>
+<h3><p align= "center">ASP.NET Core - Middleware</p></h3>
 
 In this chapter, we will understand how to set up middleware. Middleware in ASP.NET Core controls how our application responds to HTTP requests. It can also control how our application looks when there is an error, and it is a key piece in how we authenticate and authorize a user to perform specific actions.
 
@@ -39,6 +39,9 @@ Let us now assume that we want to log information about every request into our a
 In that case, the first piece of middleware that we might install into the application is a logging component.
 
 This logger can see everything about the incoming request, but chances are a logger is simply going to record some information and then pass along this request to the next piece of middleware.
+
+<p align="center"><img src="https://www.tutorialspoint.com/asp.net_core/images/middleware.jpg"><p/>
+
 
 #### Middleware
 
