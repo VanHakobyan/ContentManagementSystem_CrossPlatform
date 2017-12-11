@@ -6,7 +6,7 @@ using CMS.BL.ViewModels;
 using CMS.DAL.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace CMS.BL
+namespace CMS.BL.Managers
 {
     public class CustomersManager : IDisposable
     {

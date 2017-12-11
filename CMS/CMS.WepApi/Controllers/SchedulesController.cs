@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CMS.BL;
+using CMS.BL.Managers;
 using CMS.BL.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
