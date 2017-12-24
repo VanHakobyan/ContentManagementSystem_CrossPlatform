@@ -75,6 +75,5 @@ Add in body an array of ids you would like to remove
 ```
 
 #### You can see more here 
-* <a href="https://github.com/VanHakobyan/ContentManagementSystem_CrossPlatform/blob/master/Documentation/CMSWebAPISpecification.pdf">Pdf</a>
-<br>
-* <a href="https://github.com/VanHakobyan/ContentManagementSystem_CrossPlatform/blob/master/Documentation/CMSWebAPISpecification.docx">Word</a>
+1. <a href="https://github.com/VanHakobyan/ContentManagementSystem_CrossPlatform/blob/master/Documentation/CMSWebAPISpecification.pdf">Pdf</a>
+2. <a href="https://github.com/VanHakobyan/ContentManagementSystem_CrossPlatform/blob/master/Documentation/CMSWebAPISpecification.docx">Word</a>
