@@ -75,4 +75,4 @@ Add in body an array of ids you would like to remove
 ```
 
 #### You can see more here 
-<a href="https://github.com/VanHakobyan/ContentManagementSystem_CrossPlatform/blob/master/Documentation/CMSWebAPISpecification.pdf">Pdf</><a href="https://github.com/VanHakobyan/ContentManagementSystem_CrossPlatform/blob/master/Documentation/CMSWebAPISpecification.docx">Word</>
+<a href="https://github.com/VanHakobyan/ContentManagementSystem_CrossPlatform/blob/master/Documentation/CMSWebAPISpecification.pdf">Pdf</a><a href="https://github.com/VanHakobyan/ContentManagementSystem_CrossPlatform/blob/master/Documentation/CMSWebAPISpecification.docx">Word</a>
