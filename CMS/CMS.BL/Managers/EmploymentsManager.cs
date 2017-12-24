@@ -48,9 +48,9 @@ namespace CMS.BL.Managers
         // POST: api/Employments
         public async Task<ViewEmployments> PostEmployments(ViewEmployments employments)
         {
-            db.Employments.Add(factory.CreateEmploymentsModelFromDb(employments));
+            var employmentToAdd = db.Employments.Add(factory.CreateEmploymentsModelFromDb(employments)).Entity;
             await db.SaveChangesAsync();
-            return employments;
+            return factory.CreateEmploymentsViewModel(employmentToAdd);
         }
 
         // DELETE: api/Employments/5
