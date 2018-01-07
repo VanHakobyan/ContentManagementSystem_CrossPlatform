@@ -23,9 +23,6 @@
 ➔ Response
 ● Post (add new Customers to database)
 ➔ Request - http://cmswepapi.azurewebsites.net/api/Contacts
-```
-
-```
 ➔ Response
 ● Delete (deletes Customers by Id array)
 ➔ Request - http://cmswepapi.azurewebsites.net/api /Contacts
