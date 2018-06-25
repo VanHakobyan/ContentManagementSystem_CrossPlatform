@@ -49,6 +49,7 @@ Add in body the array of guids of contacts you would like to remove from mention
 Add in body an array of ids you would like to remove
 ➔ Response
 ```
+
 #### Schedules
 
 ```
